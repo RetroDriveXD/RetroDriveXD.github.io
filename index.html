@@ -3,33 +3,298 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Retro</title>
+  <title>RETRO // GARAGE & ABANDONWARE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=MS+Gothic&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #008080;
+      --win-gray: #c0c0c0;
+      --win-light: #ffffff;
+      --win-dark: #808080;
+      --win-black: #000000;
+      --win-blue: #000080;
+      --neon-green: #00ff66;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      background: #0f172a;
-      color: #e2e8f0;
-      font-family: monospace;
-      padding: 2rem;
-      max-width: 650px;
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(circle, rgba(0, 0, 0, 0.25) 10%, transparent 11%),
+        radial-gradient(circle, rgba(0, 0, 0, 0.25) 10%, transparent 11%);
+      background-size: 8px 8px;
+      background-position: 0 0, 4px 4px;
+      font-family: 'MS Gothic', 'Courier New', monospace;
+      color: #000;
+      padding: 16px;
+      font-size: 14px;
+    }
+
+    /* Window Box Model (Windows 98 classic bevel) */
+    .win {
+      background: var(--win-gray);
+      border-top: 2px solid var(--win-light);
+      border-left: 2px solid var(--win-light);
+      border-right: 2px solid var(--win-black);
+      border-bottom: 2px solid var(--win-black);
+      box-shadow: 1.5px 1.5px 0 var(--win-dark);
+      margin-bottom: 16px;
+    }
+
+    .title-bar {
+      background: linear-gradient(90deg, var(--win-blue), #1084d0);
+      padding: 3px 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-family: 'VT323', monospace;
+      font-size: 20px;
+      letter-spacing: 1px;
+    }
+
+    .title-btn {
+      width: 16px;
+      height: 14px;
+      background: var(--win-gray);
+      border-top: 1px solid var(--win-light);
+      border-left: 1px solid var(--win-light);
+      border-right: 1px solid var(--win-black);
+      border-bottom: 1px solid var(--win-black);
+      font-size: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .win-content {
+      padding: 12px;
+    }
+
+    .inset-panel {
+      border-top: 2px solid var(--win-dark);
+      border-left: 2px solid var(--win-dark);
+      border-right: 2px solid var(--win-light);
+      border-bottom: 2px solid var(--win-light);
+      background: #000;
+      color: var(--neon-green);
+      font-family: 'VT323', monospace;
+      padding: 8px 12px;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    .container {
+      max-width: 760px;
       margin: 0 auto;
     }
-    h1 { color: #f59e0b; }
-    .card {
-      border: 1px solid #334155;
-      padding: 1rem;
-      border-radius: 8px;
-      margin-top: 1rem;
-      background: #1e293b;
+
+    /* Marquee Banner */
+    marquee {
+      background: #ffff00;
+      color: #000;
+      border: 1px dashed #000;
+      font-weight: bold;
+      padding: 4px;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    h1, h2, h3 {
+      font-family: 'VT323', monospace;
+      letter-spacing: 1px;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 6px;
+      color: #000080;
+    }
+
+    .badge-bar {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin: 8px 0;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: 'VT323', monospace;
+      font-size: 14px;
+      background: #000;
+      color: #ff0055;
+      border: 1px solid #fff;
+      padding: 2px 6px;
+    }
+
+    .project-card {
+      border-top: 2px solid var(--win-dark);
+      border-left: 2px solid var(--win-dark);
+      border-right: 2px solid var(--win-light);
+      border-bottom: 2px solid var(--win-light);
+      background: #dfdfdf;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px dotted #808080;
+      padding-bottom: 4px;
+      margin-bottom: 6px;
+    }
+
+    .status-tag {
+      font-size: 11px;
+      font-weight: bold;
+      padding: 1px 4px;
+      background: #ff4444;
+      color: #fff;
+    }
+
+    .status-tag.alive {
+      background: #ff8800;
+    }
+
+    a {
+      color: #0000ee;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    a:visited {
+      color: #551a8b;
+    }
+
+    .webring-footer {
+      text-align: center;
+      font-size: 12px;
+      padding: 8px;
     }
   </style>
 </head>
 <body>
-  <h1>> Retro</h1>
-  <p>Freshman @ KTU // IoT, Embedded Systems.</p>
-  <div class="card">
-    <h3>Current PC / Laptop setup</h3>
-    <p>Lenovo ThinkPad E16 gen 3 AMD with Ryzen 5 230 and 32GB RAM.</p>
-    <p> PC: Ryzen 7 3700X 32GB DDR4 RAM RX 7600XT</p>
+
+<div class="container">
+
+  <!-- Running Ticker -->
+  <marquee scrollamount="6">
+    *** WELCOME TO RETRO'S JUNKYARD *** 500,000 KM PASSAT AFN  *** FRESHMAN AT KTU *** CURRENTLY BREAKING JAVA IN MCREATOR *** UNDER CONSTRUCTION FOREVER ***
+  </marquee>
+
+  <!-- Top Main Window -->
+  <div class="win">
+    <div class="title-bar">
+      <span>C:\RETRO\SYSTEM_SPECS.EXE</span>
+      <div class="title-btn">X</div>
+    </div>
+    <div class="win-content">
+      <div class="inset-panel">
+        <div>USER: Retro</div>
+        <div>AFFILIATION: Kaunas University of Technology (KTU) - 1st Year</div>
+        <div>FIELD: IoT for now / Fixing shit with zip-ties</div>
+        <div>MISSION: Documenting unfinished prototypes, car mods, and corrupt code saves.</div>
+      </div>
+      <p>I don't have polished SaaS apps. I have a 1990s diesel sedan with half a million kilometers and unfinished game levels rotting on my hard drive.</p>
+      
+      <div class="badge-bar">
+        <span class="badge">[PASSAT B5 AFN]</span>
+        <span class="badge">[ESP32 / C++]</span>
+        <span class="badge">[HPL2 ENGINE]</span>
+        <span class="badge">[MCREATOR GANK]</span>
+        <span class="badge">[KTU FRESHMAN]</span>
+      </div>
+    </div>
   </div>
+
+  <!-- Hardware / Garage Section -->
+  <div class="win">
+    <div class="title-bar">
+      <span>GARAGE_DIAGNOSTICS.TXT</span>
+      <div class="title-btn">_</div>
+    </div>
+    <div class="win-content">
+      <h2>// 01. THE 500,000 KM SURVIVOR</h2>
+      <div class="project-card">
+        <div class="project-header">
+          <strong>Passat B5 1.9 TDI (AFN) The Cockroach</strong>
+          <span class="status-tag alive">TINKERING</span>
+        </div>
+        <p>A half-million-kilometer sedan powered by a VP37 distributor injection pump. Would love to add a some cosmetic stuff to make it cool and less shitboxy</p>
+        <p style="margin-top: 6px; font-size: 12px; color: #555;">TECH: Almost everything stock only radio is from Aliexpress android auto hell ye</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- The Abandoned Software / Mods Section -->
+  <div class="win">
+    <div class="title-bar">
+      <span>CORRUPTED_MODS_LOG.DAT</span>
+      <div class="title-btn">?</div>
+    </div>
+    <div class="win-content">
+      <h2>// 02. GRAVEYARD OF HALF-FINISHED BUILDS</h2>
+
+      <div class="project-card">
+        <div class="project-header">
+          <strong>MCreator Experimental Mod Pile</strong>
+          <span class="status-tag">BROKEN / BUGGY</span>
+        </div>
+        <p>Various slapped-together Minecraft mods made entirely with MCreator GUI logic. Custom weapons with broken hitboxes, mobs that have crazy buffed powers like big yahy missiles, and dropping item into lava crashes minecraft itself</p>
+        <p style="margin-top: 6px; font-size: 12px; color: #555;">STATE: Have compiled some Java files but playable but need improving.</p>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <strong>Amnesia: The Dark Descent Custom Stories</strong>
+          <span class="status-tag">ABANDONED</span>
+        </div>
+        <p>A couple of unfinished custom maps made in HPL2 Level Editor. Mostly playable but unfinished.</p>
+        <p style="margin-top: 6px; font-size: 12px; color: #555;">STATE: Motivation low, lost interest. Abandoned in `custom_stories/`.</p>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <strong>KTU 1st Year Lab Submissions</strong>
+          <span class="status-tag alive">IN PROGRESS</span>
+        </div>
+        <p>Current coursework: Math 1, OOP with C# </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer / Links -->
+  <div class="win">
+    <div class="title-bar">
+      <span>NET_LINKS.URL</span>
+      <div class="title-btn">X</div>
+    </div>
+    <div class="win-content webring-footer">
+      <p>
+        [ <a href="https://github.com/RetroDriveXD" target="_blank">GITHUB REPO</a> ] — 
+        [ HOSTED ON GITHUB PAGES ] — 
+        [ BEST VIEWED IN 1024x768 ]
+      </p>
+      <p style="margin-top: 6px; font-size: 11px; color: #555;">
+        © Retro // Kaunas, Lithuania // No cookies, no trackers, just static HTML.
+      </p>
+    </div>
+  </div>
+
+</div>
+
 </body>
 </html>
