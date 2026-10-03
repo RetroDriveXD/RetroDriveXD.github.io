@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RETRO // GARAGE & ABANDONWARE</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ＲＥＴＲＯ // 蒸気波 // 500,000 KM AFN</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=VT323&family=MS+Gothic&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Orbitron:wght@600;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #008080;
-      --win-gray: #c0c0c0;
-      --win-light: #ffffff;
-      --win-dark: #808080;
-      --win-black: #000000;
-      --win-blue: #000080;
-      --neon-green: #00ff66;
+      --neon-pink: #ff71ce;
+      --neon-cyan: #01cdfe;
+      --neon-purple: #b967ff;
+      --vapor-yellow: #fffb96;
+      --vapor-mint: #05ffa1;
+      --dark-violet: #14092b;
+      --card-bg: rgba(28, 12, 54, 0.78);
     }
 
     * {
@@ -25,164 +25,243 @@
     }
 
     body {
-      background-color: var(--bg);
-      background-image: 
-        radial-gradient(circle, rgba(0, 0, 0, 0.25) 10%, transparent 11%),
-        radial-gradient(circle, rgba(0, 0, 0, 0.25) 10%, transparent 11%);
-      background-size: 8px 8px;
-      background-position: 0 0, 4px 4px;
-      font-family: 'MS Gothic', 'Courier New', monospace;
-      color: #000;
-      padding: 16px;
-      font-size: 14px;
+      background: linear-gradient(180deg, #180533 0%, #2f0d57 45%, #6a1372 75%, #ff71ce 100%);
+      background-attachment: fixed;
+      color: #e0d6ff;
+      font-family: 'Share Tech Mono', monospace;
+      min-height: 100vh;
+      padding: 24px 16px 60px 16px;
+      position: relative;
+      overflow-x: hidden;
     }
 
-    /* Window Box Model (Windows 98 classic bevel) */
-    .win {
-      background: var(--win-gray);
-      border-top: 2px solid var(--win-light);
-      border-left: 2px solid var(--win-light);
-      border-right: 2px solid var(--win-black);
-      border-bottom: 2px solid var(--win-black);
-      box-shadow: 1.5px 1.5px 0 var(--win-dark);
-      margin-bottom: 16px;
-    }
-
-    .title-bar {
-      background: linear-gradient(90deg, var(--win-blue), #1084d0);
-      padding: 3px 6px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: #fff;
-      font-family: 'VT323', monospace;
-      font-size: 20px;
-      letter-spacing: 1px;
-    }
-
-    .title-btn {
-      width: 16px;
-      height: 14px;
-      background: var(--win-gray);
-      border-top: 1px solid var(--win-light);
-      border-left: 1px solid var(--win-light);
-      border-right: 1px solid var(--win-black);
-      border-bottom: 1px solid var(--win-black);
-      font-size: 9px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .win-content {
-      padding: 12px;
-    }
-
-    .inset-panel {
-      border-top: 2px solid var(--win-dark);
-      border-left: 2px solid var(--win-dark);
-      border-right: 2px solid var(--win-light);
-      border-bottom: 2px solid var(--win-light);
-      background: #000;
-      color: var(--neon-green);
-      font-family: 'VT323', monospace;
-      padding: 8px 12px;
-      font-size: 18px;
-      margin-bottom: 12px;
+    /* Subtle CRT Scanline overlay */
+    body::before {
+      content: " ";
+      display: block;
+      position: fixed;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.28) 50%);
+      background-size: 100% 4px;
+      z-index: 100;
+      pointer-events: none;
+      opacity: 0.85;
     }
 
     .container {
-      max-width: 760px;
+      max-width: 820px;
       margin: 0 auto;
+      position: relative;
+      z-index: 10;
     }
 
-    /* Marquee Banner */
-    marquee {
-      background: #ffff00;
-      color: #000;
-      border: 1px dashed #000;
-      font-weight: bold;
-      padding: 4px;
-      font-size: 13px;
-      margin-bottom: 12px;
-    }
-
-    h1, h2, h3 {
+    /* Ticker Banner */
+    .vapor-marquee {
+      background: rgba(10, 2, 24, 0.85);
+      border: 1px solid var(--neon-pink);
+      box-shadow: 0 0 10px rgba(255, 113, 206, 0.45);
+      color: var(--vapor-mint);
       font-family: 'VT323', monospace;
-      letter-spacing: 1px;
+      font-size: 20px;
+      padding: 6px 12px;
+      letter-spacing: 2px;
+      margin-bottom: 24px;
+    }
+
+    /* Vaporwave / Outrun Windows */
+    .panel {
+      background: var(--card-bg);
+      border: 2px solid var(--neon-cyan);
+      box-shadow: 0 0 14px rgba(1, 205, 254, 0.35), inset 0 0 20px rgba(185, 103, 255, 0.12);
+      backdrop-filter: blur(6px);
+      margin-bottom: 24px;
+      border-radius: 4px;
+    }
+
+    .panel-header {
+      background: linear-gradient(90deg, #b967ff, #ff71ce);
+      color: #0d011f;
+      padding: 6px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+
+    .panel-body {
+      padding: 18px;
+    }
+
+    /* Typography & Glows */
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      color: #fff;
+      text-shadow: 
+        0 0 5px #fff,
+        0 0 10px var(--neon-pink),
+        0 0 20px var(--neon-pink),
+        0 0 40px var(--neon-purple);
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+
+    .kanji-sub {
+      font-size: 15px;
+      color: var(--vapor-mint);
+      letter-spacing: 3px;
+      margin-bottom: 16px;
+      text-shadow: 0 0 8px rgba(5, 255, 161, 0.6);
     }
 
     h2 {
-      font-size: 24px;
-      margin-bottom: 6px;
-      color: #000080;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 18px;
+      color: var(--vapor-yellow);
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      text-shadow: 0 0 8px rgba(255, 251, 150, 0.5);
     }
 
-    .badge-bar {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin: 8px 0;
-    }
-
-    .badge {
-      display: inline-block;
-      font-family: 'VT323', monospace;
+    /* Terminal HUD Box */
+    .hud-box {
+      background: rgba(8, 2, 18, 0.9);
+      border-left: 3px solid var(--neon-pink);
+      padding: 12px 14px;
+      margin-bottom: 16px;
       font-size: 14px;
-      background: #000;
-      color: #ff0055;
-      border: 1px solid #fff;
-      padding: 2px 6px;
+      line-height: 1.6;
+      color: #d1c4e9;
     }
 
-    .project-card {
-      border-top: 2px solid var(--win-dark);
-      border-left: 2px solid var(--win-dark);
-      border-right: 2px solid var(--win-light);
-      border-bottom: 2px solid var(--win-light);
-      background: #dfdfdf;
-      padding: 10px;
-      margin-bottom: 10px;
+    .hud-box span.key {
+      color: var(--neon-cyan);
+      font-weight: bold;
     }
 
-    .project-header {
+    .hud-box span.val {
+      color: var(--vapor-mint);
+    }
+
+    /* Tags / Chips */
+    .pill-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .pill {
+      background: rgba(1, 205, 254, 0.1);
+      border: 1px solid var(--neon-cyan);
+      color: var(--neon-cyan);
+      font-size: 12px;
+      padding: 3px 8px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      box-shadow: 0 0 6px rgba(1, 205, 254, 0.2);
+    }
+
+    /* Item Card */
+    .item-card {
+      background: rgba(14, 5, 30, 0.7);
+      border: 1px solid rgba(255, 113, 206, 0.35);
+      border-left: 4px solid var(--neon-pink);
+      padding: 14px;
+      margin-bottom: 14px;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .item-card:hover {
+      border-color: var(--neon-pink);
+      box-shadow: 0 0 12px rgba(255, 113, 206, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .item-head {
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
-      border-bottom: 1px dotted #808080;
-      padding-bottom: 4px;
-      margin-bottom: 6px;
+      align-items: center;
+      margin-bottom: 8px;
+      border-bottom: 1px dashed rgba(185, 103, 255, 0.4);
+      padding-bottom: 6px;
     }
 
-    .status-tag {
+    .item-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 15px;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-status {
       font-size: 11px;
+      font-family: 'VT323', monospace;
+      font-size: 14px;
+      padding: 2px 6px;
+      letter-spacing: 1px;
+    }
+
+    .badge-live {
+      background: var(--vapor-mint);
+      color: #071912;
       font-weight: bold;
-      padding: 1px 4px;
-      background: #ff4444;
-      color: #fff;
     }
 
-    .status-tag.alive {
-      background: #ff8800;
-    }
-
-    a {
-      color: #0000ee;
+    .badge-boost {
+      background: var(--neon-pink);
+      color: #2b001a;
       font-weight: bold;
-      text-decoration: underline;
     }
 
-    a:visited {
-      color: #551a8b;
+    .badge-future {
+      background: var(--vapor-yellow);
+      color: #2d2600;
+      font-weight: bold;
     }
 
-    .webring-footer {
-      text-align: center;
+    .sub-meta {
       font-size: 12px;
-      padding: 8px;
+      color: var(--neon-cyan);
+      margin-top: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    a.glow-link {
+      color: var(--neon-cyan);
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    a.glow-link:hover {
+      color: var(--neon-pink);
+      text-shadow: 0 0 8px var(--neon-pink);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 16px;
+      font-size: 12px;
+      color: #a491d3;
+      letter-spacing: 1.5px;
+    }
+
+    .sun-synth {
+      width: 100px;
+      height: 50px;
+      margin: 10px auto 0 auto;
+      border-top-left-radius: 100px;
+      border-top-right-radius: 100px;
+      background: linear-gradient(180deg, var(--vapor-yellow) 0%, var(--neon-pink) 100%);
+      box-shadow: 0 0 20px rgba(255, 113, 206, 0.8);
+      position: relative;
     }
   </style>
 </head>
@@ -190,108 +269,122 @@
 
 <div class="container">
 
-  <!-- Running Ticker -->
-  <marquee scrollamount="6">
-    *** WELCOME TO RETRO'S JUNKYARD *** 500,000 KM PASSAT AFN  *** FRESHMAN AT KTU *** CURRENTLY BREAKING JAVA IN MCREATOR *** UNDER CONSTRUCTION FOREVER ***
+  <!-- Running Vapor Banner -->
+  <marquee class="vapor-marquee" scrollamount="6">
+    ❖ ＲＥＴＲＯ_ＳＹＳＴＥＭＳ // 500,000 KM PASSAT B5 AFN // DEBIAN SID [RTOS-LINUX] POWER USER // KTU IT ENGINEERING FRESHMAN // SQUEEZING MORE POWAH OUT OF SILICON & DIESEL ❖
   </marquee>
 
-  <!-- Top Main Window -->
-  <div class="win">
-    <div class="title-bar">
-      <span>C:\RETRO\SYSTEM_SPECS.EXE</span>
-      <div class="title-btn">X</div>
+  <!-- Hero Identity Panel -->
+  <div class="panel">
+    <div class="panel-header">
+      <span>SYSTEM // RETRO_EXE</span>
+      <span>[ VAPOR_LINK: ACTIVE ]</span>
     </div>
-    <div class="win-content">
-      <div class="inset-panel">
-        <div>USER: Retro</div>
-        <div>AFFILIATION: Kaunas University of Technology (KTU) - 1st Year</div>
-        <div>FIELD: IoT for now / Fixing shit with zip-ties</div>
-        <div>MISSION: Documenting unfinished prototypes, car mods, and corrupt code saves.</div>
-      </div>
-      <p>I don't have polished SaaS apps. I have a 1990s diesel sedan with half a million kilometers and unfinished game levels rotting on my hard drive.</p>
-      
-      <div class="badge-bar">
-        <span class="badge">[PASSAT B5 AFN]</span>
-        <span class="badge">[ESP32 / C++]</span>
-        <span class="badge">[HPL2 ENGINE]</span>
-        <span class="badge">[MCREATOR GANK]</span>
-        <span class="badge">[KTU FRESHMAN]</span>
-      </div>
-    </div>
-  </div>
+    <div class="panel-body">
+      <h1>ＲＥＴＲＯ // レトロ</h1>
+      <div class="kanji-sub">ＩＴ ＥＮＧＩＮＥＥＲＩＮＧ — ＫＴＵ ＦＲＥＳＨＭＡＮ</div>
 
-  <!-- Hardware / Garage Section -->
-  <div class="win">
-    <div class="title-bar">
-      <span>GARAGE_DIAGNOSTICS.TXT</span>
-      <div class="title-btn">_</div>
-    </div>
-    <div class="win-content">
-      <h2>// 01. THE 500,000 KM SURVIVOR</h2>
-      <div class="project-card">
-        <div class="project-header">
-          <strong>Passat B5 1.9 TDI (AFN) The Cockroach</strong>
-          <span class="status-tag alive">TINKERING</span>
-        </div>
-        <p>A half-million-kilometer sedan powered by a VP37 distributor injection pump. Would love to add a some cosmetic stuff to make it cool and less shitboxy</p>
-        <p style="margin-top: 6px; font-size: 12px; color: #555;">TECH: Almost everything stock only radio is from Aliexpress android auto hell ye</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- The Abandoned Software / Mods Section -->
-  <div class="win">
-    <div class="title-bar">
-      <span>CORRUPTED_MODS_LOG.DAT</span>
-      <div class="title-btn">?</div>
-    </div>
-    <div class="win-content">
-      <h2>// 02. GRAVEYARD OF HALF-FINISHED BUILDS</h2>
-
-      <div class="project-card">
-        <div class="project-header">
-          <strong>MCreator Experimental Mod Pile</strong>
-          <span class="status-tag">BROKEN / BUGGY</span>
-        </div>
-        <p>Various slapped-together Minecraft mods made entirely with MCreator GUI logic. Custom weapons with broken hitboxes, mobs that have crazy buffed powers like big yahy missiles, and dropping item into lava crashes minecraft itself</p>
-        <p style="margin-top: 6px; font-size: 12px; color: #555;">STATE: Have compiled some Java files but playable but need improving.</p>
+      <div class="hud-box">
+        <div><span class="key">PROFILE :</span> Retro // Kaunas University of Technology (KTU)</div>
+        <div><span class="key">CORE OS :</span> <span class="val">RTOS-Linux</span> (Debian Sid base, customized via Cubic)</div>
+        <div><span class="key">DAILY DRIVER :</span> 9+ Months uninterrupted Linux desktop use</div>
+        <div><span class="key">BENCHMARK :</span> VW Passat B5 (1.9 TDI AFN) — 500,000 KM on the odometer</div>
+        <div><span class="key">OBJECTIVE :</span> Pushing clock speeds, building distros, and resurrecting analog diesel platforms.</div>
       </div>
 
-      <div class="project-card">
-        <div class="project-header">
-          <strong>Amnesia: The Dark Descent Custom Stories</strong>
-          <span class="status-tag">ABANDONED</span>
-        </div>
-        <p>A couple of unfinished custom maps made in HPL2 Level Editor. Mostly playable but unfinished.</p>
-        <p style="margin-top: 6px; font-size: 12px; color: #555;">STATE: Motivation low, lost interest. Abandoned in `custom_stories/`.</p>
-      </div>
-
-      <div class="project-card">
-        <div class="project-header">
-          <strong>KTU 1st Year Lab Submissions</strong>
-          <span class="status-tag alive">IN PROGRESS</span>
-        </div>
-        <p>Current coursework: Math 1, OOP with C# </p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer / Links -->
-  <div class="win">
-    <div class="title-bar">
-      <span>NET_LINKS.URL</span>
-      <div class="title-btn">X</div>
-    </div>
-    <div class="win-content webring-footer">
-      <p>
-        [ <a href="https://github.com/RetroDriveXD" target="_blank">GITHUB REPO</a> ] — 
-        [ HOSTED ON GITHUB PAGES ] — 
-        [ BEST VIEWED IN 1024x768 ]
+      <p style="line-height: 1.6; color: #cfc2eb;">
+        I thrive where physical iron meets low-level compute. Whether it's compiling debian packages for responsive latency, overclocking PC silicon past spec, or keeping a 500,000 km mechanical turbo-diesel roaring down the highway—stock settings are just suggestions.
       </p>
-      <p style="margin-top: 6px; font-size: 11px; color: #555;">
-        © Retro // Kaunas, Lithuania // No cookies, no trackers, just static HTML.
-      </p>
+
+      <div class="pill-group">
+        <span class="pill">Debian Sid</span>
+        <span class="pill">Cubic Distro Mod</span>
+        <span class="pill">1.9 TDI AFN (VP37)</span>
+        <span class="pill">KTU Freshman</span>
+        <span class="pill">Hardware Oc & Tuning</span>
+        <span class="pill">Embedded IoT Vision</span>
+      </div>
     </div>
+  </div>
+
+  <!-- Low Level & Distro Work -->
+  <div class="panel">
+    <div class="panel-header">
+      <span>SYS_STORAGE // LOW_LEVEL_CRAFT.ISO</span>
+      <span>NODE: 01</span>
+    </div>
+    <div class="panel-body">
+      <h2>// 01. LINUX ROOT & HARDWARE BENCH</h2>
+
+      <div class="item-card">
+        <div class="item-head">
+          <span class="item-title">"RTOS-Linux" Custom Distribution</span>
+          <span class="badge-status badge-live">DAILY DRIVER</span>
+        </div>
+        <p>Engineered a personalized OS image using <strong>Cubic</strong> with bleeding-edge <strong>Debian Sid</strong> as the backbone. Stripped GUI bloat, tuned scheduler priorities, packaged dependencies, and daily-driven as my main machine for 9+ months.</p>
+        <div class="sub-meta">> STACK: Debian Sid / Cubic / Custom Systemd Services / Bash</div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-head">
+          <span class="item-title">Hardware Overclocking & Compute Tuning</span>
+          <span class="badge-status badge-boost">MAX POWAH</span>
+        </div>
+        <p>Tuning desktop hardware, ring buses, DRAM sub-timings, and low-level game engine configs. Eliminating frame pacing stutters and squeezing sustained performance out of silicon.</p>
+        <div class="sub-meta">> FOCUS: BIOS modding, thermal dissipation, undervolting curves, latency cuts</div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-head">
+          <span class="item-title">KTU IT Engineering Track</span>
+          <span class="badge-status badge-live">YEAR 1 (FRESHMAN)</span>
+        </div>
+        <p>First-year engineering grind: procedural C/C++, algorithmic problem-solving, digital logic systems, and discrete mathematics at Kaunas University of Technology.</p>
+        <div class="sub-meta">> STATUS: Building foundation in systems and low-level software</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Diesel Garage & Restomods -->
+  <div class="panel">
+    <div class="panel-header">
+      <span>GARAGE_LINK // 1.9_TDI_TELEMETRY.VAG</span>
+      <span>NODE: 02</span>
+    </div>
+    <div class="panel-body">
+      <h2>// 02. DIESEL TEST BENCH & RESTOMOD VISION</h2>
+
+      <div class="item-card">
+        <div class="item-head">
+          <span class="item-title">Passat B5 Sedan 1.9 TDI (AFN) — 500k km</span>
+          <span class="badge-status badge-boost">500,000 KM SURVIVOR</span>
+        </div>
+        <p>The daily experimental test mule. Powered by the legendary VP37 rotary distributor injection pump. Surviving half a million kilometers of vibration, heat, and high boost pressure while serving as the test bed for digital telemetry readouts.</p>
+        <div class="sub-meta">> SPECS: 1.9 TDI AFN / Mechanical icon / K-Line diagnostics / Pure analog reliability</div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-head">
+          <span class="item-title">The Golf Restomod Roadmap (MK2 / MK4 / MK5 1.9 TDI)</span>
+          <span class="badge-status badge-future">FUTURE PROJECT</span>
+        </div>
+        <p>The long-term vision: Take indestructible 1.9 TDI platforms (VP37 rotary & Pumpe Düse PD engines) across classic Golf generations and engineer them into the ultimate modern dailies. Retrofitting creature comforts, custom digital sensor telemetry, high-efficiency cooling, and clean torque delivery without ruining their 4.5L/100km fuel economy.</p>
+        <div class="sub-meta">> CONCEPT: Custom IoT gauges, cabin electronics retrofits, CAN-bus integration</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vapor Footer -->
+  <div class="footer">
+    <div class="sun-synth"></div>
+    <p style="margin-top: 14px;">
+      [ <a href="https://github.com/RetroDriveXD" target="_blank" class="glow-link">GITHUB: RETRODRIVEXD</a> ] — 
+      [ KTU INFORMATICS ] — 
+      [ GITHUB PAGES ]
+    </p>
+    <p style="margin-top: 6px; font-size: 11px; color: var(--neon-pink);">
+      ＡＥＳＴＨＥＴＩＣＳ // 100% BOOST // NO SYSTEM BLOAT
+    </p>
   </div>
 
 </div>
