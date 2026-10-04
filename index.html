@@ -1,47 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="vaporwave">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>ＲＥＴＲＯ // 蒸気波 // 500,000+ KM AFN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retro // KTU IT Freshman — systems, distros &amp; diesel</title>
+  <meta name="description" content="Portfolio of Retro: KTU IT engineering freshman building Linux distros, squeezing performance out of PC hardware and keeping a high-mileage diesel Passat alive." />
+  <meta name="theme-color" id="meta-theme" content="#180533" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Retro // KTU IT Freshman" />
+  <meta property="og:description" content="Custom Linux distros, PC hardware tuning and a half-million-kilometre diesel Passat." />
+  <!-- <meta property="og:image" content="https://YOUR-USER.github.io/preview.png" /> -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2314092b'/%3E%3Cpath d='M8 40a24 24 0 0 1 48 0z' fill='%23ff71ce'/%3E%3Cpath d='M8 46h48M12 52h40' stroke='%2301cdfe' stroke-width='3'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Orbitron:wght@600;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+  <!-- Runs before first paint: applies ?theme=... and decides whether to show the boot intro -->
+  <script>
+    (function () {
+      var d = document.documentElement;
+      try {
+        var p = new URLSearchParams(location.search);
+        var t = p.get('theme');
+        if (['vaporwave', 'amber', 'phosphor', 'ice'].indexOf(t) > -1) d.setAttribute('data-theme', t);
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        // window.name survives reloads in the same tab, so the intro plays once per tab
+        if (!reduce && window.name !== 'retro-booted' && p.get('boot') !== '0') {
+          d.classList.add('booting');
+          setTimeout(function () { d.classList.remove('booting'); }, 15000); // safety net
+        }
+      } catch (e) {}
+    })();
+  </script>
+
   <style>
-    :root {
-      --neon-pink: #ff71ce;
-      --neon-cyan: #01cdfe;
-      --neon-purple: #b967ff;
-      --vapor-yellow: #fffb96;
-      --vapor-mint: #05ffa1;
-      --dark-violet: #14092b;
-      --card-bg: rgba(28, 12, 54, 0.82);
+    /* =========================================================
+       THEMES — every colour on the page comes from these variables
+       To add a theme: add a block here + an entry in THEMES (JS)
+       ========================================================= */
+    :root, [data-theme="vaporwave"] {
+      --neon-pink: #ff71ce;   --pink-rgb: 255, 113, 206;
+      --neon-cyan: #01cdfe;   --cyan-rgb: 1, 205, 254;
+      --neon-purple: #b967ff; --purple-rgb: 185, 103, 255;
+      --vapor-yellow: #fffb96; --yellow-rgb: 255, 251, 150;
+      --vapor-mint: #05ffa1;  --mint-rgb: 5, 255, 161;
+      --dark-rgb: 14, 4, 30;
+      --card-rgb: 28, 12, 54;
+      --term-bg: #090216;
+      --text: #e0d6ff;
+      --text-soft: #cfc2eb;
+      --muted: #9d8cc0;
+      --header-text: #0d011f;
+      --bg-grad: linear-gradient(180deg, #180533 0%, #2f0d57 45%, #6a1372 75%, #ff71ce 100%);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
+    [data-theme="amber"] {
+      --neon-pink: #ffb000;   --pink-rgb: 255, 176, 0;
+      --neon-cyan: #ffcc4d;   --cyan-rgb: 255, 204, 77;
+      --neon-purple: #c27c00; --purple-rgb: 194, 124, 0;
+      --vapor-yellow: #ffe08a; --yellow-rgb: 255, 224, 138;
+      --vapor-mint: #ff9d2e;  --mint-rgb: 255, 157, 46;
+      --dark-rgb: 18, 10, 0;
+      --card-rgb: 36, 20, 0;
+      --term-bg: #0e0700;
+      --text: #ffd9a0;
+      --text-soft: #e8c07a;
+      --muted: #b08a4a;
+      --header-text: #1a0f00;
+      --bg-grad: linear-gradient(180deg, #120a00 0%, #241300 45%, #3a2000 75%, #6b3d00 100%);
     }
+
+    [data-theme="phosphor"] {
+      --neon-pink: #39ff14;   --pink-rgb: 57, 255, 20;
+      --neon-cyan: #00ffa2;   --cyan-rgb: 0, 255, 162;
+      --neon-purple: #1fbf4a; --purple-rgb: 31, 191, 74;
+      --vapor-yellow: #c8ff5a; --yellow-rgb: 200, 255, 90;
+      --vapor-mint: #7dffb2;  --mint-rgb: 125, 255, 178;
+      --dark-rgb: 2, 10, 4;
+      --card-rgb: 4, 22, 10;
+      --term-bg: #010602;
+      --text: #b8ffcb;
+      --text-soft: #8fe3a8;
+      --muted: #5fa176;
+      --header-text: #021a08;
+      --bg-grad: linear-gradient(180deg, #010a03 0%, #03150a 45%, #052a12 75%, #0a4d22 100%);
+    }
+
+    [data-theme="ice"] {
+      --neon-pink: #8ab4ff;   --pink-rgb: 138, 180, 255;
+      --neon-cyan: #5ef2ff;   --cyan-rgb: 94, 242, 255;
+      --neon-purple: #9d8bff; --purple-rgb: 157, 139, 255;
+      --vapor-yellow: #e8f4ff; --yellow-rgb: 232, 244, 255;
+      --vapor-mint: #7affd9;  --mint-rgb: 122, 255, 217;
+      --dark-rgb: 5, 11, 28;
+      --card-rgb: 10, 22, 52;
+      --term-bg: #030818;
+      --text: #dbe8ff;
+      --text-soft: #b9cdf0;
+      --muted: #8196bd;
+      --header-text: #04112b;
+      --bg-grad: linear-gradient(180deg, #050b1c 0%, #0b2250 45%, #14407a 75%, #2a6db5 100%);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    html { scroll-behavior: smooth; }
+    html.booting body { overflow: hidden; height: 100vh; }
 
     body {
-      background: linear-gradient(180deg, #180533 0%, #2f0d57 45%, #6a1372 75%, #ff71ce 100%);
+      background: var(--bg-grad);
       background-attachment: fixed;
-      color: #e0d6ff;
+      color: var(--text);
       font-family: 'Share Tech Mono', monospace;
       min-height: 100vh;
-      padding: 16px 12px 60px 12px;
+      padding: 0 12px 60px 12px;
       position: relative;
       overflow-x: hidden;
     }
 
-    /* Subtle CRT Scanline overlay */
+    /* Subtle CRT scanline overlay */
     body::before {
       content: " ";
       display: block;
       position: fixed;
-      top: 0; left: 0; bottom: 0; right: 0;
+      inset: 0;
       background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.28) 50%);
       background-size: 100% 4px;
       z-index: 100;
@@ -49,601 +131,431 @@
       opacity: 0.85;
     }
 
-    .container {
-      max-width: 860px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 10;
+    a:focus-visible, button:focus-visible, input:focus-visible, .terminal-output:focus-visible {
+      outline: 2px dashed var(--vapor-yellow);
+      outline-offset: 3px;
     }
 
-    /* Top Bar with Audio Deck */
-    .top-deck {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
+    .skip-link {
+      position: absolute; left: -999px; top: 8px;
+      background: var(--vapor-yellow); color: #000; padding: 6px 10px; z-index: 200;
     }
+    .skip-link:focus { left: 8px; }
+
+    .container { max-width: 860px; margin: 0 auto; position: relative; z-index: 10; }
+
+    /* ---------- Theme-change flash ---------- */
+    #flash { position: fixed; inset: 0; z-index: 150; pointer-events: none; opacity: 0; background: #fff; }
+    #flash.on { animation: flash 0.45s ease-out; }
+    @keyframes flash { 0% { opacity: 0.5; } 100% { opacity: 0; } }
+
+    /* ---------- Boot intro ---------- */
+    #boot {
+      display: none;
+      position: fixed; inset: 0; z-index: 300;
+      background: #000; color: #c8c8c8;
+      font-family: 'VT323', monospace; font-size: 20px; line-height: 1.25;
+      padding: 20px 20px 60px;
+      flex-direction: column;
+      transition: opacity 0.4s;
+    }
+    html.booting #boot { display: flex; }
+    #boot.fade { opacity: 0; }
+    #boot::after {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
+      background-size: 100% 4px;
+    }
+    #boot-log { white-space: pre-wrap; word-break: break-word; flex: 1; overflow: hidden; }
+    #boot-hint { position: absolute; left: 20px; bottom: 18px; color: #888; font-size: 18px; }
+    #boot-hint .cursor { animation: blink 1s steps(2, start) infinite; }
+    @keyframes blink { to { visibility: hidden; } }
+    #boot-skip {
+      position: absolute; right: 16px; bottom: 14px; z-index: 2;
+      background: transparent; border: 1px solid #888; color: #ddd;
+      font: inherit; padding: 2px 12px; cursor: pointer;
+    }
+    #boot-skip:hover { background: #ddd; color: #000; }
+
+    /* ---------- Sticky nav + theme + audio ---------- */
+    .site-nav {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(var(--dark-rgb), 0.94);
+      border-bottom: 1px solid var(--neon-pink);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+      margin: 0 -12px 16px -12px;
+      padding: 8px 12px;
+    }
+    .site-nav-inner {
+      max-width: 860px; margin: 0 auto;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 14px;
+    }
+    .nav-links { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+    .nav-links a {
+      color: var(--neon-cyan); text-decoration: none; font-size: 13px;
+      letter-spacing: 1px; text-transform: uppercase; padding: 4px 0;
+    }
+    .nav-links a:hover { color: var(--neon-pink); text-shadow: 0 0 8px var(--neon-pink); }
+
+    .nav-tools { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+    .theme-switch { display: inline-flex; align-items: center; gap: 6px; }
+    .theme-switch-label { font-size: 12px; color: var(--neon-cyan); letter-spacing: 1px; }
+    .swatch {
+      width: 26px; height: 26px; border-radius: 50%; padding: 0; cursor: pointer;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .swatch:hover { transform: scale(1.12); }
+    .swatch[aria-pressed="true"] { border-color: #fff; box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); }
 
     .audio-player-box {
-      background: rgba(14, 4, 30, 0.9);
+      background: rgba(var(--dark-rgb), 0.9);
       border: 1px solid var(--neon-pink);
-      box-shadow: 0 0 10px rgba(255, 113, 206, 0.4);
-      padding: 6px 14px;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      border-radius: 3px;
-      cursor: pointer;
-      transition: all 0.2s;
+      box-shadow: 0 0 10px rgba(var(--pink-rgb), 0.4);
+      padding: 4px 12px;
+      display: inline-flex; align-items: center; gap: 10px;
+      border-radius: 3px; cursor: pointer; transition: all 0.2s;
+      font: inherit; color: inherit;
     }
+    .audio-player-box:hover { box-shadow: 0 0 16px rgba(var(--pink-rgb), 0.7); }
+    .audio-btn-icon { font-size: 14px; color: var(--neon-pink); }
+    .audio-title { font-family: 'VT323', monospace; font-size: 18px; color: var(--vapor-mint); letter-spacing: 1px; }
 
-    .audio-player-box:hover {
-      box-shadow: 0 0 16px rgba(255, 113, 206, 0.7);
-    }
-
-    .audio-btn-icon {
-      font-size: 14px;
-      color: var(--neon-pink);
-    }
-
-    .audio-title {
-      font-family: 'VT323', monospace;
-      font-size: 18px;
-      color: var(--vapor-mint);
-      letter-spacing: 1px;
-    }
-
-    /* Ticker Banner */
+    /* ---------- Marquee (CSS) ---------- */
     .vapor-marquee {
-      background: rgba(10, 2, 24, 0.88);
+      background: rgba(var(--dark-rgb), 0.88);
       border: 1px solid var(--neon-pink);
-      box-shadow: 0 0 10px rgba(255, 113, 206, 0.45);
+      box-shadow: 0 0 10px rgba(var(--pink-rgb), 0.45);
       color: var(--vapor-mint);
       font-family: 'VT323', monospace;
       font-size: 20px;
-      padding: 6px 12px;
+      padding: 6px 0;
       letter-spacing: 2px;
       margin-bottom: 20px;
+      overflow: hidden;
+      white-space: nowrap;
     }
+    .marquee-track { display: inline-flex; animation: marquee 40s linear infinite; will-change: transform; }
+    .marquee-track span { padding-right: 4rem; }
+    .vapor-marquee:hover .marquee-track { animation-play-state: paused; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
 
-    /* Vaporwave Windows */
+    /* ---------- Panels ---------- */
     .panel {
-      background: var(--card-bg);
+      background: rgba(var(--card-rgb), 0.82);
       border: 2px solid var(--neon-cyan);
-      box-shadow: 0 0 14px rgba(1, 205, 254, 0.35), inset 0 0 20px rgba(185, 103, 255, 0.12);
+      box-shadow: 0 0 14px rgba(var(--cyan-rgb), 0.35), inset 0 0 20px rgba(var(--purple-rgb), 0.12);
       backdrop-filter: blur(6px);
       margin-bottom: 24px;
       border-radius: 4px;
+      scroll-margin-top: 70px;
     }
-
     .panel-header {
-      background: linear-gradient(90deg, #b967ff, #ff71ce);
-      color: #0d011f;
+      background: linear-gradient(90deg, var(--neon-purple), var(--neon-pink));
+      color: var(--header-text);
       padding: 7px 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 800;
-      font-size: 12px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
+      display: flex; justify-content: space-between; align-items: center; gap: 8px;
+      font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 12px;
+      letter-spacing: 1.5px; text-transform: uppercase;
       box-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
+    .panel-body { padding: 18px; }
 
-    .panel-body {
-      padding: 18px;
+    h1 {
+      font-family: 'Orbitron', sans-serif; font-size: 34px; font-weight: 900; letter-spacing: 3px;
+      color: #fff;
+      text-shadow: 0 0 5px #fff, 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink), 0 0 40px var(--neon-purple);
+      margin-bottom: 4px; line-height: 1.2;
     }
+    .kanji-sub {
+      font-size: 14px; color: var(--vapor-mint); letter-spacing: 2px; margin-bottom: 16px;
+      text-shadow: 0 0 8px rgba(var(--mint-rgb), 0.6);
+    }
+    h2 {
+      font-family: 'Orbitron', sans-serif; font-size: 17px; color: var(--vapor-yellow);
+      letter-spacing: 1px; margin-bottom: 12px; text-shadow: 0 0 8px rgba(var(--yellow-rgb), 0.5);
+    }
+
+    /* ---------- HUD ---------- */
+    .hud-box {
+      background: rgba(var(--dark-rgb), 0.9);
+      border-left: 3px solid var(--neon-pink);
+      padding: 12px 14px; margin-bottom: 16px;
+      font-size: 14px; line-height: 1.6; color: var(--text-soft);
+    }
+    .hud-box .key { color: var(--neon-cyan); font-weight: bold; }
+    .hud-box .val { color: var(--vapor-mint); }
+    .hud-title { font-family: 'Orbitron', sans-serif; font-size: 13px; color: var(--vapor-yellow); margin-bottom: 8px; }
+
+    .telemetry-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 14px; }
+    .telemetry-cell { background: rgba(var(--dark-rgb), 0.85); border: 1px solid var(--neon-purple); padding: 8px 12px; border-radius: 3px; }
+    .t-label { font-size: 12px; color: var(--neon-cyan); text-transform: uppercase; letter-spacing: 1px; }
+    .t-value { font-size: 16px; color: var(--vapor-mint); font-weight: bold; font-family: 'Orbitron', sans-serif; margin-top: 2px; }
+
+    /* ---------- Terminal ---------- */
+    .terminal-container {
+      background: var(--term-bg); border: 1px solid var(--neon-pink); border-radius: 4px;
+      padding: 12px; font-size: 14px; box-shadow: inset 0 0 14px rgba(0,0,0,0.8);
+    }
+    .terminal-output {
+      max-height: 260px; overflow-y: auto; white-space: pre-wrap; word-break: break-word;
+      line-height: 1.45; color: var(--text); margin-bottom: 10px;
+    }
+    .terminal-prompt-row { display: flex; align-items: center; gap: 6px; border-top: 1px dashed rgba(var(--pink-rgb), 0.3); padding-top: 8px; }
+    .terminal-prompt { color: var(--neon-cyan); font-weight: bold; white-space: nowrap; }
+    .terminal-input { flex: 1; min-width: 0; background: transparent; border: none; outline: none; color: #fff; font-family: inherit; font-size: 14px; }
+
+    .cmd-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; align-items: center; }
+    .cmd-chips-label { font-size: 12px; color: var(--neon-cyan); }
+    .chip-btn {
+      background: rgba(var(--pink-rgb), 0.15); border: 1px solid var(--neon-pink); color: var(--vapor-mint);
+      font-family: 'Share Tech Mono', monospace; font-size: 12px; padding: 4px 9px; border-radius: 2px;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .chip-btn:hover { background: var(--neon-pink); color: #000; }
+
+    /* ---------- Social ---------- */
+    .social-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 8px; }
+    .social-card {
+      background: rgba(var(--dark-rgb), 0.7); border: 1px solid rgba(var(--cyan-rgb), 0.4);
+      padding: 12px; border-radius: 3px; text-decoration: none; color: inherit;
+      display: flex; flex-direction: column; gap: 4px; transition: all 0.2s ease-in-out;
+      cursor: pointer; font: inherit; text-align: left; width: 100%;
+    }
+    .social-card:hover { border-color: var(--neon-pink); box-shadow: 0 0 12px rgba(var(--pink-rgb), 0.4); transform: translateY(-2px); }
+    .social-platform { font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: bold; color: var(--neon-cyan); display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+    .social-platform .tag { font-size: 12px; font-family: 'Share Tech Mono', monospace; font-weight: normal; }
+    .social-handle { font-size: 14px; color: #fff; margin-top: 2px; word-break: break-all; }
+    .social-status { font-size: 12px; color: var(--vapor-mint); margin-top: 2px; }
+
+    /* ---------- Cards / pills ---------- */
+    .pill-group { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+    .pill { background: rgba(var(--cyan-rgb), 0.1); border: 1px solid var(--neon-cyan); color: var(--neon-cyan); font-size: 12px; padding: 3px 8px; letter-spacing: 1px; text-transform: uppercase; box-shadow: 0 0 6px rgba(var(--cyan-rgb), 0.2); }
+
+    .item-card {
+      background: rgba(var(--dark-rgb), 0.7); border: 1px solid rgba(var(--pink-rgb), 0.35); border-left: 4px solid var(--neon-pink);
+      padding: 14px; margin-bottom: 14px; transition: all 0.2s ease-in-out; line-height: 1.55;
+    }
+    .item-card:hover { border-color: var(--neon-pink); box-shadow: 0 0 12px rgba(var(--pink-rgb), 0.4); transform: translateY(-2px); }
+    .item-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px dashed rgba(var(--purple-rgb), 0.4); padding-bottom: 6px; flex-wrap: wrap; gap: 6px; }
+    .item-title { font-family: 'Orbitron', sans-serif; font-size: 14px; color: #fff; letter-spacing: 0.5px; }
+    .badge-status { font-family: 'VT323', monospace; font-size: 16px; padding: 1px 7px; letter-spacing: 1px; font-weight: bold; color: var(--header-text); }
+    .badge-live { background: var(--vapor-mint); }
+    .badge-boost { background: var(--neon-pink); }
+    .badge-future { background: var(--vapor-yellow); }
+    .badge-archive { background: var(--muted); }
+    .sub-meta { font-size: 13px; color: var(--neon-cyan); margin-top: 8px; letter-spacing: 0.5px; }
+
+    figure.shot { margin: 10px 0 0; }
+    figure.shot img { display: block; max-width: 100%; height: auto; border: 1px solid var(--neon-cyan); box-shadow: 0 0 10px rgba(var(--cyan-rgb), 0.3); }
+    figure.shot figcaption { font-size: 12px; color: var(--neon-cyan); margin-top: 4px; }
+
+    a.glow-link { color: var(--neon-cyan); text-decoration: none; transition: 0.2s; }
+    a.glow-link:hover { color: var(--neon-pink); text-shadow: 0 0 8px var(--neon-pink); }
+    .link-row { margin-top: 10px; font-size: 13px; }
+
+    .footer { text-align: center; padding: 16px; font-size: 13px; color: var(--text-soft); letter-spacing: 1.5px; }
+    .sun-synth {
+      width: 100px; height: 50px; margin: 10px auto 0 auto;
+      border-top-left-radius: 100px; border-top-right-radius: 100px;
+      background: linear-gradient(180deg, var(--vapor-yellow) 0%, var(--neon-pink) 100%);
+      box-shadow: 0 0 20px rgba(var(--pink-rgb), 0.8);
+    }
+
+    [hidden] { display: none !important; }
 
     @media (max-width: 600px) {
       .panel-body { padding: 14px; }
-      h1 { font-size: 26px !important; }
+      h1 { font-size: 26px; }
       .vapor-marquee { font-size: 16px; }
+      #boot { font-size: 16px; padding: 14px 14px 60px; }
+      /* backdrop-filter is costly on weaker phones */
+      .panel { backdrop-filter: none; background: rgba(var(--card-rgb), 0.94); }
+      /* 16px stops iOS Safari zooming on focus */
+      .terminal-input { font-size: 16px; }
     }
 
-    /* Typography & Glows */
-    h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 34px;
-      font-weight: 900;
-      letter-spacing: 3px;
-      color: #fff;
-      text-shadow: 
-        0 0 5px #fff,
-        0 0 10px var(--neon-pink),
-        0 0 20px var(--neon-pink),
-        0 0 40px var(--neon-purple);
-      margin-bottom: 4px;
-      line-height: 1.2;
-    }
-
-    .kanji-sub {
-      font-size: 14px;
-      color: var(--vapor-mint);
-      letter-spacing: 2px;
-      margin-bottom: 16px;
-      text-shadow: 0 0 8px rgba(5, 255, 161, 0.6);
-    }
-
-    h2 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 17px;
-      color: var(--vapor-yellow);
-      letter-spacing: 1px;
-      margin-bottom: 12px;
-      text-shadow: 0 0 8px rgba(255, 251, 150, 0.5);
-    }
-
-    /* Terminal HUD Box */
-    .hud-box {
-      background: rgba(8, 2, 18, 0.9);
-      border-left: 3px solid var(--neon-pink);
-      padding: 12px 14px;
-      margin-bottom: 16px;
-      font-size: 13px;
-      line-height: 1.6;
-      color: #d1c4e9;
-    }
-
-    .hud-box span.key {
-      color: var(--neon-cyan);
-      font-weight: bold;
-    }
-
-    .hud-box span.val {
-      color: var(--vapor-mint);
-    }
-
-    /* Live Telemetry Bar */
-    .telemetry-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .telemetry-cell {
-      background: rgba(10, 3, 24, 0.85);
-      border: 1px solid var(--neon-purple);
-      padding: 8px 12px;
-      border-radius: 3px;
-    }
-
-    .telemetry-cell .t-label {
-      font-size: 10px;
-      color: var(--neon-cyan);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .telemetry-cell .t-value {
-      font-size: 16px;
-      color: var(--vapor-mint);
-      font-weight: bold;
-      font-family: 'Orbitron', sans-serif;
-      margin-top: 2px;
-    }
-
-    /* Interactive Terminal Window */
-    .terminal-container {
-      background: #090216;
-      border: 1px solid var(--neon-pink);
-      border-radius: 4px;
-      padding: 12px;
-      font-size: 13px;
-      box-shadow: inset 0 0 14px rgba(0,0,0,0.8);
-    }
-
-    .terminal-output {
-      max-height: 240px;
-      overflow-y: auto;
-      white-space: pre-wrap;
-      word-break: break-word;
-      line-height: 1.45;
-      color: #e2d9f3;
-      margin-bottom: 10px;
-    }
-
-    .terminal-prompt-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      border-top: 1px dashed rgba(255, 113, 206, 0.3);
-      padding-top: 8px;
-    }
-
-    .terminal-prompt {
-      color: var(--neon-cyan);
-      font-weight: bold;
-      white-space: nowrap;
-    }
-
-    .terminal-input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      outline: none;
-      color: #fff;
-      font-family: inherit;
-      font-size: 13px;
-    }
-
-    /* Quick command chips */
-    .cmd-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-
-    .chip-btn {
-      background: rgba(255, 113, 206, 0.15);
-      border: 1px solid var(--neon-pink);
-      color: var(--vapor-mint);
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 2px;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-
-    .chip-btn:hover {
-      background: var(--neon-pink);
-      color: #000;
-    }
-
-    /* Social Links Grid */
-    .social-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 12px;
-      margin-top: 8px;
-    }
-
-    .social-card {
-      background: rgba(14, 5, 30, 0.7);
-      border: 1px solid rgba(1, 205, 254, 0.4);
-      padding: 12px;
-      border-radius: 3px;
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      transition: all 0.2s ease-in-out;
-      cursor: pointer;
-      position: relative;
-    }
-
-    .social-card:hover {
-      border-color: var(--neon-pink);
-      box-shadow: 0 0 12px rgba(255, 113, 206, 0.4);
-      transform: translateY(-2px);
-    }
-
-    .social-platform {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 12px;
-      font-weight: bold;
-      color: var(--neon-cyan);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .social-handle {
-      font-size: 13px;
-      color: #ffffff;
-      margin-top: 2px;
-    }
-
-    .social-status {
-      font-size: 10px;
-      color: var(--vapor-mint);
-      margin-top: 2px;
-    }
-
-    /* Tags / Chips */
-    .pill-group {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 14px;
-    }
-
-    .pill {
-      background: rgba(1, 205, 254, 0.1);
-      border: 1px solid var(--neon-cyan);
-      color: var(--neon-cyan);
-      font-size: 11px;
-      padding: 3px 8px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      box-shadow: 0 0 6px rgba(1, 205, 254, 0.2);
-    }
-
-    /* Item Card */
-    .item-card {
-      background: rgba(14, 5, 30, 0.7);
-      border: 1px solid rgba(255, 113, 206, 0.35);
-      border-left: 4px solid var(--neon-pink);
-      padding: 14px;
-      margin-bottom: 14px;
-      transition: all 0.2s ease-in-out;
-    }
-
-    .item-card:hover {
-      border-color: var(--neon-pink);
-      box-shadow: 0 0 12px rgba(255, 113, 206, 0.4);
-      transform: translateY(-2px);
-    }
-
-    .item-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-      border-bottom: 1px dashed rgba(185, 103, 255, 0.4);
-      padding-bottom: 6px;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .item-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 14px;
-      color: #ffffff;
-      letter-spacing: 0.5px;
-    }
-
-    .badge-status {
-      font-family: 'VT323', monospace;
-      font-size: 15px;
-      padding: 1px 7px;
-      letter-spacing: 1px;
-    }
-
-    .badge-live {
-      background: var(--vapor-mint);
-      color: #071912;
-      font-weight: bold;
-    }
-
-    .badge-boost {
-      background: var(--neon-pink);
-      color: #2b001a;
-      font-weight: bold;
-    }
-
-    .badge-future {
-      background: var(--vapor-yellow);
-      color: #2d2600;
-      font-weight: bold;
-    }
-
-    .badge-archive {
-      background: #796894;
-      color: #0c0418;
-      font-weight: bold;
-    }
-
-    .sub-meta {
-      font-size: 12px;
-      color: var(--neon-cyan);
-      margin-top: 8px;
-      letter-spacing: 0.5px;
-    }
-
-    a.glow-link {
-      color: var(--neon-cyan);
-      text-decoration: none;
-      transition: 0.2s;
-    }
-
-    a.glow-link:hover {
-      color: var(--neon-pink);
-      text-shadow: 0 0 8px var(--neon-pink);
-    }
-
-    .footer {
-      text-align: center;
-      padding: 16px;
-      font-size: 12px;
-      color: #a491d3;
-      letter-spacing: 1.5px;
-    }
-
-    .sun-synth {
-      width: 100px;
-      height: 50px;
-      margin: 10px auto 0 auto;
-      border-top-left-radius: 100px;
-      border-top-right-radius: 100px;
-      background: linear-gradient(180deg, var(--vapor-yellow) 0%, var(--neon-pink) 100%);
-      box-shadow: 0 0 20px rgba(255, 113, 206, 0.8);
-      position: relative;
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .vapor-marquee { white-space: normal; padding: 6px 12px; }
+      .marquee-track { display: block; transform: none; }
+      .marquee-track span[aria-hidden="true"] { display: none; }
+      .item-card:hover, .social-card:hover, .swatch:hover { transform: none; }
     }
   </style>
 </head>
 <body>
 
-<!-- DROP YOUR AUDIO FILE HERE (e.g. bgm.mp3) -->
-<audio id="bgm" loop src="bgm.mp3"></audio>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<div class="container">
+<!-- Boot intro overlay (shown only while <html> has the "booting" class) -->
+<div id="boot" role="dialog" aria-modal="true" aria-label="Boot sequence. Use the skip button to continue.">
+  <div id="boot-log" aria-hidden="true"></div>
+  <div id="boot-hint" aria-hidden="true">Press any key to skip<span class="cursor">_</span></div>
+  <button type="button" id="boot-skip">SKIP</button>
+</div>
 
-  <!-- Top Status & Audio Bar -->
-  <div class="top-deck">
-    <div style="font-size: 12px; color: var(--neon-cyan);">
-      KTU // INFORMATICS FACULTY // 2026
+<div id="flash" aria-hidden="true"></div>
+
+<!-- Add a file named bgm.mp3 next to this page. The player hides itself if the file is missing. -->
+<audio id="bgm" loop preload="none"></audio>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="site-nav-inner">
+    <div class="nav-links">
+      <a href="#terminal">Terminal</a>
+      <a href="#hardware">Hardware</a>
+      <a href="#projects">Projects</a>
+      <a href="#garage">Garage</a>
+      <a href="#contact">Contact</a>
     </div>
+    <div class="nav-tools">
+      <div class="theme-switch" role="group" aria-label="Color theme">
+        <span class="theme-switch-label" aria-hidden="true">THEME</span>
+        <span id="swatches" style="display:inline-flex;gap:6px;"></span>
+      </div>
+      <button type="button" class="audio-player-box" id="audio-toggle" aria-pressed="false" aria-label="Toggle background music">
+        <span class="audio-btn-icon" id="audio-icon" aria-hidden="true">▶</span>
+        <span class="audio-title" id="audio-status">BGM [PLAY]</span>
+      </button>
+    </div>
+  </div>
+</nav>
 
-    <!-- Retro Player Toggle -->
-    <div class="audio-player-box" id="audio-toggle" onclick="toggleAudio()">
-      <span class="audio-btn-icon" id="audio-icon">▶</span>
-      <span class="audio-title" id="audio-status">BGM.MP3 [PLAY]</span>
+<div class="container" id="main">
+
+  <!-- Running banner (pure CSS). The second copy is decorative for the seamless loop. -->
+  <div class="vapor-marquee" role="marquee" aria-label="Summary banner">
+    <div class="marquee-track">
+      <span id="marquee-a"></span>
+      <span id="marquee-b" aria-hidden="true"></span>
     </div>
   </div>
 
-  <!-- Running Vapor Banner -->
-  <marquee class="vapor-marquee" scrollamount="6">
-    ❖ ＲＥＴＲＯ_ＳＹＳＴＥＭＳ // 529,000 KM PASSAT B5 AFN // MAIN RIG: RYZEN 7 3700X + RX 7600 XT 16GB [WIN 10 IOT LTSC] // THINKPAD E16 GEN 3 // KTU FRESHMAN ❖
-  </marquee>
-
-  <!-- Hero Identity Panel -->
-  <div class="panel">
+  <!-- Hero -->
+  <section class="panel" aria-labelledby="hero-title">
     <div class="panel-header">
       <span>SYSTEM // RETRO_EXE</span>
       <span>[ VAPOR_LINK: ACTIVE ]</span>
     </div>
     <div class="panel-body">
-      <h1>ＲＥＴＲＯ // レトロ</h1>
-      <div class="kanji-sub">ＩＴ ＥＮＧＩＮＥＥＲＩＮＧ — ＫＴＵ ＦＲＥＳＨＭＡＮ</div>
+      <h1 id="hero-title">RETRO // <span lang="ja">レトロ</span></h1>
+      <div class="kanji-sub">IT ENGINEERING — KTU FRESHMAN</div>
 
       <div class="hud-box">
         <div><span class="key">PROFILE :</span> Retro // Kaunas University of Technology (KTU)</div>
-        <div><span class="key">MAIN RIG :</span> <span class="val">Epstein (MS-7C95)</span> // Ryzen 7 3700X + RX 7600 XT 16GB [Win 10 IoT LTSC]</div>
-        <div><span class="key">MOBILE RIG :</span> <span class="val">ThinkPad E16 Gen 3</span> // Ryzen 5 230 + 32GB RAM [Win 11 Pro]</div>
         <div><span class="key">DISTRO DEV :</span> "RTOS-Linux" (Debian Sid base, custom Win98 shell via Cubic)</div>
-        <div><span class="key">BENCHMARK :</span> VW Passat B5 (1.9 TDI AFN) — 529,000 KM on the odometer</div>
+        <div><span class="key">BENCHMARK :</span> <span id="bind-benchmark"></span></div>
         <div><span class="key">OBJECTIVE :</span> Squeezing performance out of PC silicon, building distros, and keeping analog diesel iron immortal.</div>
       </div>
 
-      <p style="line-height: 1.6; color: #cfc2eb;">
-        I thrive where physical iron meets low-level compute. Whether it's compiling debian live spins via Cubic, running unbloated Enterprise IoT LTSC for sustained low-latency workloads, or dailying a 529,000 km mechanical turbo-diesel—stock settings are just suggestions.
-      </p>
+      <p style="line-height: 1.6; color: var(--text-soft);" id="bind-intro"></p>
 
-      <div class="pill-group">
-        <span class="pill">Ryzen 7 3700X</span>
-        <span class="pill">RX 7600 XT 16GB</span>
-        <span class="pill">32GB DDR4-3600</span>
-        <span class="pill">Win 10 IoT LTSC</span>
-        <span class="pill">ThinkPad E16 (32GB)</span>
-        <span class="pill">1.9 TDI AFN (VP37)</span>
-        <span class="pill">KTU Freshman</span>
-      </div>
+      <div class="pill-group" id="pills"></div>
     </div>
-  </div>
+  </section>
 
-  <!-- Interactive Terminal Panel -->
-  <div class="panel">
+  <!-- Terminal -->
+  <section class="panel" id="terminal" aria-labelledby="term-title">
     <div class="panel-header">
-      <span>INTERACTIVE TTY // TERMINAL_SESSION</span>
+      <span id="term-title">INTERACTIVE TTY // TERMINAL_SESSION</span>
       <span>NODE: SHELL</span>
     </div>
     <div class="panel-body">
-      <div class="cmd-chips">
-        <span style="font-size: 11px; color: var(--neon-cyan); align-self: center;">QUICK RUN:</span>
-        <button class="chip-btn" onclick="runCommand('neofetch')">neofetch</button>
-        <button class="chip-btn" onclick="runCommand('specs')">specs (fleet)</button>
-        <button class="chip-btn" onclick="runCommand('socials')">socials</button>
-        <button class="chip-btn" onclick="runCommand('repos')">repos (github)</button>
-        <button class="chip-btn" onclick="runCommand('idling')">idling</button>
-        <button class="chip-btn" onclick="runCommand('cat amnesia.txt')">cat amnesia</button>
-        <button class="chip-btn" onclick="runCommand('cat mcreator.txt')">cat mcreator</button>
-        <button class="chip-btn" onclick="runCommand('clear')">clear</button>
+      <div class="cmd-chips" id="chips">
+        <span class="cmd-chips-label">QUICK RUN:</span>
       </div>
 
-      <div class="terminal-container" onclick="document.getElementById('term-in').focus()">
-        <div class="terminal-output" id="term-out">RetroOS Shell (IoT LTSC / ThinkPad / AFN Station)
-Type <span style="color:var(--vapor-mint)">help</span> to list commands, or tap the quick pills above.</div>
+      <div class="terminal-container" id="term-box">
+        <div class="terminal-output" id="term-out" role="log" aria-live="polite" tabindex="0" aria-label="Terminal output"></div>
         <div class="terminal-prompt-row">
-          <span class="terminal-prompt">retro@epstein:~$</span>
-          <input type="text" id="term-in" class="terminal-input" autocomplete="off" spellcheck="false" placeholder="type a command..."/>
+          <label class="terminal-prompt" for="term-in" id="term-prompt"></label>
+          <input type="text" id="term-in" class="terminal-input" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal command input" placeholder="type a command..." />
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Hardware Fleet & Distro Work -->
-  <div class="panel">
+  <!-- Hardware -->
+  <section class="panel" id="hardware" aria-labelledby="hw-title">
     <div class="panel-header">
       <span>SYS_STORAGE // HARDWARE_FLEET.CFG</span>
       <span>NODE: 01</span>
     </div>
     <div class="panel-body">
-      <h2>// 01. ACTIVE HARDWARE FLEET & COMPUTE RIGS</h2>
-
-      <!-- RIG 1: Main Desktop Battlestation -->
-      <div class="hud-box" style="border-left-color: var(--neon-cyan); margin-bottom: 14px;">
-        <div style="font-family: 'Orbitron', sans-serif; font-size: 13px; color: var(--vapor-yellow); margin-bottom: 8px;">
-          // MAIN_RIG: "EPSTEIN" (MS-7C95) [DESKTOP WORKSTATION]
-        </div>
-        <div><span class="key">PROCESSOR :</span> <span class="val">AMD Ryzen 7 3700X</span> (8 Cores, 16 Threads @ 3.60 GHz)</div>
-        <div><span class="key">GRAPHICS :</span> <span class="val">AMD Radeon RX 7600 XT (16 GB GDDR6)</span></div>
-        <div><span class="key">MEMORY :</span> <span class="val">32.0 GB DDR4 @ 3600 MHz</span></div>
-        <div><span class="key">STORAGE :</span> 3.57 TB Array (1TB Crucial P3 Plus NVMe + 2TB Seagate SSD + 1TB WD Blue HDD)</div>
-        <div><span class="key">OS PLATFORM :</span> <span class="val">Windows 10 Enterprise IoT LTSC</span> (Debloated, pure stability)</div>
-      </div>
-
-      <!-- RIG 2: ThinkPad Mobile Lab -->
-      <div class="hud-box" style="border-left-color: var(--neon-pink); margin-bottom: 20px;">
-        <div style="font-family: 'Orbitron', sans-serif; font-size: 13px; color: var(--vapor-pink); margin-bottom: 8px;">
-          // MOBILE_RIG: LENOVO THINKPAD E16 GEN 3 [KTU CAMPUS & LABS]
-        </div>
-        <div><span class="key">PROCESSOR :</span> <span class="val">AMD Ryzen 5 230</span> (Efficient multi-core architecture)</div>
-        <div><span class="key">MEMORY :</span> <span class="val">32GB RAM</span> (High-capacity VM headroom / multi-tasking)</div>
-        <div><span class="key">OS PLATFORM :</span> Windows 11 Pro</div>
-        <div><span class="key">PURPOSE :</span> KTU lecture halls, programming labs, portable diagnostics & on-the-go terminal.</div>
-      </div>
-
-      <!-- Software Projects -->
-      <div class="item-card">
-        <div class="item-head">
-          <span class="item-title">"RTOS-Linux" Custom Debian Sid Distro</span>
-          <span class="badge-status badge-live">HOBBY ISO</span>
-        </div>
-        <p>Engineered a personalized OS image using <strong>Cubic</strong> with bleeding-edge <strong>Debian Sid</strong>. Wrapped in a retro Windows 98 aesthetic facade—built for fun during summer engineering break.</p>
-        <div class="sub-meta">> STACK: Debian Sid / Cubic / Chroot / Bash</div>
-      </div>
-
-      <div class="item-card">
-        <div class="item-head">
-          <span class="item-title">KTU IT Engineering Track</span>
-          <span class="badge-status badge-live">YEAR 1 (FRESHMAN)</span>
-        </div>
-        <p>First-year engineering grind: procedural C# and discrete mathematics at Kaunas University of Technology.</p>
-        <div class="sub-meta">> STATUS: Building foundation in systems and low-level software</div>
-      </div>
-
-      <!-- Amnesia & MCreator Archive Cards -->
-      <div class="item-card">
-        <div class="item-head">
-          <span class="item-title">Amnesia: The Dark Descent (Custom Stories)</span>
-          <span class="badge-status badge-archive">2 STORIES [ABANDONED]</span>
-        </div>
-        <p>Level geometry, custom atmosphere, and scripted sanity drops built in HPL2 Engine. Shelved after lost motivation.</p>
-        <div class="sub-meta">> ENGINE: HPL2 / AngelScript</div>
-      </div>
-
-      <div class="item-card">
-        <div class="item-head">
-          <span class="item-title">MCreator Mod Trilogy</span>
-          <span class="badge-status badge-archive">1 SURVIVED / 2 LOST</span>
-        </div>
-        <p>Absolute diarrhea mods, copyright infridgement hell, big yahu missile launchers and math teacher painting</p>
-        <div class="sub-meta">> PLATFORM: Minecraft Forge/Neoforge / Java Workspace</div>
-      </div>
+      <h2 id="hw-title">// 01. ACTIVE HARDWARE FLEET &amp; COMPUTE RIGS</h2>
+      <div id="rigs"></div>
     </div>
-  </div>
+  </section>
 
-  <!-- Diesel Garage & Restomods -->
-  <div class="panel">
+  <!-- Projects -->
+  <section class="panel" id="projects" aria-labelledby="proj-title">
     <div class="panel-header">
-      <span>GARAGE_LINK // 1.9_TDI_TELEMETRY.VAG</span>
+      <span>PROJECTS // WORKSPACE.DIR</span>
       <span>NODE: 02</span>
     </div>
     <div class="panel-body">
-      <h2>// 02. DIESEL TEST BENCH & RESTOMOD VISION</h2>
+      <h2 id="proj-title">// 02. PROJECTS &amp; ARCHIVE</h2>
 
-      <!-- Live AFN Idling Telemetry -->
+      <article class="item-card">
+        <div class="item-head">
+          <h3 class="item-title">"RTOS-Linux" Custom Debian Sid Distro</h3>
+          <span class="badge-status badge-live">HOBBY ISO</span>
+        </div>
+        <p>Engineered a personalized OS image using <strong>Cubic</strong> with bleeding-edge <strong>Debian Sid</strong>. Wrapped in a retro Windows 98 aesthetic facade, built for fun during summer engineering break.</p>
+        <figure class="shot">
+          <!-- Drop a screenshot at img/rtos-linux.png. The figure hides itself until the file exists. -->
+          <img src="img/rtos-linux.png" alt="Screenshot of the RTOS-Linux desktop with its Windows 98 style shell" loading="lazy" onerror="this.closest('figure').hidden = true" />
+          <figcaption>RTOS-Linux desktop</figcaption>
+        </figure>
+        <div class="sub-meta">&gt; STACK: Debian Sid / Cubic / Chroot / Bash</div>
+        <div class="link-row" data-link="rtosRepo" hidden>&gt; <a class="glow-link" target="_blank" rel="noopener noreferrer">Source / download</a></div>
+      </article>
+
+      <article class="item-card">
+        <div class="item-head">
+          <h3 class="item-title">KTU IT Engineering Track</h3>
+          <span class="badge-status badge-live">YEAR 1 (FRESHMAN)</span>
+        </div>
+        <p>First-year engineering grind: procedural C# and discrete mathematics at Kaunas University of Technology.</p>
+        <div class="sub-meta">&gt; STATUS: Building foundation in systems and low-level software</div>
+      </article>
+
+      <article class="item-card">
+        <div class="item-head">
+          <h3 class="item-title">Amnesia: The Dark Descent (Custom Stories)</h3>
+          <span class="badge-status badge-archive">2 STORIES [ABANDONED]</span>
+        </div>
+        <p>Level geometry, custom atmosphere, and scripted sanity drops built in the HPL2 engine. Shelved after motivation ran out.</p>
+        <div class="sub-meta">&gt; ENGINE: HPL2 / AngelScript</div>
+      </article>
+
+      <article class="item-card">
+        <div class="item-head">
+          <h3 class="item-title">MCreator Mod Trilogy</h3>
+          <span class="badge-status badge-archive">1 SURVIVED / 2 LOST</span>
+        </div>
+        <p>Chaotic early experiments: wildly unbalanced items, a few copyright-adjacent ideas, and a painting of my math teacher. Only one of the three survived.</p>
+        <div class="sub-meta">&gt; PLATFORM: Minecraft Forge/NeoForge / Java workspace</div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Garage -->
+  <section class="panel" id="garage" aria-labelledby="garage-title">
+    <div class="panel-header">
+      <span>GARAGE_LINK // 1.9_TDI_TELEMETRY.VAG</span>
+      <span>NODE: 03</span>
+    </div>
+    <div class="panel-body">
+      <h2 id="garage-title">// 03. DIESEL TEST BENCH &amp; RESTOMOD VISION</h2>
+
       <div class="telemetry-grid">
         <div class="telemetry-cell">
           <div class="t-label">Confirmed Odometer</div>
-          <div class="t-value">529,000 KM</div>
+          <div class="t-value" id="bind-odo"></div>
         </div>
         <div class="telemetry-cell">
           <div class="t-label">Continuous Session Idle</div>
@@ -655,358 +567,709 @@ Type <span style="color:var(--vapor-mint)">help</span> to list commands, or tap 
         </div>
       </div>
 
-      <div class="item-card">
+      <article class="item-card">
         <div class="item-head">
-          <span class="item-title">Passat B5 Sedan 1.9 TDI (AFN) — 529k km</span>
-          <span class="badge-status badge-boost">529,000 KM SURVIVOR</span>
+          <h3 class="item-title" id="bind-car-title"></h3>
+          <span class="badge-status badge-boost" id="bind-car-badge"></span>
         </div>
         <p>The daily cockroach. Powered by the legendary VP37 rotary distributor injection pump. Surviving over half a million kilometers of Baltic winters, vibration, and boost pressure while running like an immortal tractor.</p>
-        <div class="sub-meta">> SPECS: 1.9 TDI AFN / Mechanical icon / Pure analog reliability</div>
-      </div>
+        <figure class="shot">
+          <!-- Drop a photo at img/passat.jpg. The figure hides itself until the file exists. -->
+          <img src="img/passat.jpg" alt="Photo of the VW Passat B5 1.9 TDI" loading="lazy" onerror="this.closest('figure').hidden = true" />
+          <figcaption>The Passat</figcaption>
+        </figure>
+        <div class="sub-meta">&gt; SPECS: 1.9 TDI AFN / Mechanical icon / Pure analog reliability</div>
+      </article>
 
-      <div class="item-card">
+      <article class="item-card">
         <div class="item-head">
-          <span class="item-title">The Golf Restomod Roadmap (MK2 / MK4 / MK5 1.9 TDI)</span>
-          <span class="badge-status badge-future">VISSION</span>
+          <h3 class="item-title">The Golf Restomod Roadmap (MK2 / MK4 / MK5 1.9 TDI)</h3>
+          <span class="badge-status badge-future">VISION</span>
         </div>
-        <p>The long-term vision: Take indestructible 1.9 TDI platforms (VP37 rotary & Pumpe Düse PD engines) across classic Golf generations and engineer them into the ultimate modern dailies. Retrofitting creature comforts, custom digital sensor telemetry, high-efficiency cooling, and clean torque delivery without ruining their 4.5L/100km fuel economy.</p>
-        <div class="sub-meta">> CONCEPT: Custom IoT gauges (maybe, analog is fine tbh), cabin electronics retrofits, CAN-bus integration</div>
-      </div>
+        <p>The long-term vision: take indestructible 1.9 TDI platforms (VP37 rotary and Pumpe Düse PD engines) across classic Golf generations and engineer them into the ultimate modern dailies. Retrofitting creature comforts, custom digital sensor telemetry, high-efficiency cooling, and clean torque delivery without ruining their 4.5 L/100 km fuel economy.</p>
+        <div class="sub-meta">&gt; CONCEPT: Custom IoT gauges (maybe, analog is fine tbh), cabin electronics retrofits, CAN-bus integration</div>
+      </article>
     </div>
-  </div>
+  </section>
 
-  <!-- Social Media & Comms Hub -->
-  <div class="panel">
+  <!-- Contact -->
+  <section class="panel" id="contact" aria-labelledby="contact-title">
     <div class="panel-header">
       <span>NETWORK // COMMS_MATRIX.NET</span>
-      <span>NODE: 03</span>
+      <span>NODE: 04</span>
     </div>
     <div class="panel-body">
-      <h2>// 03. UPLINKS & SOCIAL NODES</h2>
-      <p style="margin-bottom: 14px; font-size: 13px; color: #cfc2eb;">
-        Reach out for yapping about low-level systems tinkering, diesel talk, KTU collaboration.
+      <h2 id="contact-title">// 04. UPLINKS &amp; CONTACT</h2>
+      <p style="margin-bottom: 14px; font-size: 14px; color: var(--text-soft);">
+        Open to chatting about low-level systems tinkering, diesel talk, KTU collaboration, internships and projects.
       </p>
 
       <div class="social-grid">
-        
-        <!-- GitHub Link -->
-        <a href="https://github.com/RetroDriveXD" target="_blank" class="social-card">
-          <div class="social-platform">
-            <span>GITHUB</span>
-            <span style="font-size: 10px;">[SRC]</span>
-          </div>
-          <div class="social-handle">@RetroDriveXD</div>
-          <div class="social-status">> Repos</div>
+        <a class="social-card" id="card-email" hidden>
+          <div class="social-platform"><span>EMAIL</span><span class="tag">[BEST]</span></div>
+          <div class="social-handle" id="email-handle"></div>
+          <div class="social-status">&gt; Best way to reach me</div>
         </a>
 
-        <!-- Discord Copy Card -->
-        <div class="social-card" onclick="copyDiscord('retro_drive')" id="discord-card">
-          <div class="social-platform">
-            <span>DISCORD</span>
-            <span id="discord-status-tag" style="font-size: 10px; color: var(--vapor-mint);">[CLICK TO COPY]</span>
-          </div>
-          <div class="social-handle" id="discord-handle">retro_drive</div>
-          <div class="social-status">> Direct Chat (maybe)</div>
-        </div>
-
-        <!-- Steam Link -->
-        <a href="https://steamcommunity.com/id/Retro_Drive/" target="Retro_Drive" class="social-card">
-          <div class="social-platform">
-            <span>STEAM</span>
-            <span style="font-size: 10px;">[GAME]</span>
-          </div>
-          <div class="social-handle">Retro_Drive</div>
-          <div class="social-status">>Maybe gaming</div>
+        <a class="social-card" id="card-cv" target="_blank" rel="noopener noreferrer" hidden>
+          <div class="social-platform"><span>CV</span><span class="tag">[PDF]</span></div>
+          <div class="social-handle">Download résumé</div>
+          <div class="social-status">&gt; Education &amp; projects</div>
         </a>
 
+        <a class="social-card" id="card-github" target="_blank" rel="noopener noreferrer">
+          <div class="social-platform"><span>GITHUB</span><span class="tag">[SRC]</span></div>
+          <div class="social-handle" id="github-handle"></div>
+          <div class="social-status">&gt; Repos</div>
+        </a>
+
+        <button type="button" class="social-card" id="card-discord" aria-label="Copy Discord username">
+          <div class="social-platform"><span>DISCORD</span><span class="tag" id="discord-status-tag" style="color: var(--vapor-mint);">[CLICK TO COPY]</span></div>
+          <div class="social-handle" id="discord-handle"></div>
+          <div class="social-status">&gt; Direct chat</div>
+        </button>
+
+        <a class="social-card" id="card-steam" target="_blank" rel="noopener noreferrer">
+          <div class="social-platform"><span>STEAM</span><span class="tag">[GAME]</span></div>
+          <div class="social-handle" id="steam-handle"></div>
+          <div class="social-status">&gt; Gaming</div>
+        </a>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Vapor Footer -->
-  <div class="footer">
-    <div class="sun-synth"></div>
+  <footer class="footer">
+    <div class="sun-synth" aria-hidden="true"></div>
     <p style="margin-top: 14px;">
-      [ <a href="https://github.com/RetroDriveXD" target="_blank" class="glow-link">GITHUB: RETRODRIVEXD</a> ] —  
-      [ KTU INFORMATICS ] — 
+      [ <a id="footer-gh" class="glow-link" target="_blank" rel="noopener noreferrer"></a> ] —
+      [ KTU INFORMATICS ] —
       [ GITHUB PAGES ]
     </p>
-    <p style="margin-top: 6px; font-size: 11px; color: var(--neon-pink);">
-      ＡＥＳＴＨＥＴＩＣＳ // 100% BOOST // NO SYSTEM BLOAT // UPDATED 2026-10-04 
+    <p style="margin-top: 6px; font-size: 12px; color: var(--neon-pink);">
+      <span aria-hidden="true">ＡＥＳＴＨＥＴＩＣＳ // </span>100% BOOST // NO SYSTEM BLOAT<span id="updated"></span>
     </p>
-  </div>
+  </footer>
 
 </div>
 
+<noscript>
+  <p style="position:relative;z-index:20;text-align:center;padding:16px;color:#fffb96;">This page uses JavaScript for the terminal, hardware specs, themes and live telemetry.</p>
+</noscript>
+
 <script>
-  /* =========================================================
-     1. USER AUDIO PLAYER CONTROLLER
-     ========================================================= */
-  function toggleAudio() {
-    const audio = document.getElementById('bgm');
-    const icon = document.getElementById('audio-icon');
-    const status = document.getElementById('audio-status');
+/* =========================================================
+   0. SINGLE SOURCE OF TRUTH — edit values here only
+   ========================================================= */
+const DATA = {
+  handle: 'retro',
+  host: 'retro-rig',                 // hostname shown in the terminal and boot screen
+  school: 'Kaunas University of Technology (KTU)',
 
-    audio.volume = 0.35;
+  car: {
+    name: 'VW Passat B5 Sedan 1.9 TDI (AFN)',
+    short: 'VW Passat B5 1.9 TDI AFN',
+    power: '81 kW',
+    pump: 'VP37',
+    odometer: 529000,
+    idleRpm: 903
+  },
 
-    if (audio.paused) {
-      audio.play().then(() => {
-        icon.innerText = '❚❚';
-        status.innerText = 'BGM [PLAYING 35%]';
-        status.style.color = 'var(--neon-pink)';
-      }).catch(err => {
-        status.innerText = 'NO AUDIO FOUND (ADD bgm.mp3)';
-        status.style.color = 'var(--vapor-yellow)';
-      });
-    } else {
-      audio.pause();
-      icon.innerText = '▶';
-      status.innerText = 'BGM [PAUSED]';
-      status.style.color = 'var(--vapor-mint)';
+  rigs: [
+    {
+      id: 'main',
+      label: 'MAIN_RIG',
+      kind: 'DESKTOP WORKSTATION',
+      board: 'MS-7C95',
+      accent: 'var(--neon-cyan)',
+      cpu: 'AMD Ryzen 7 3700X',
+      cpuNote: '(8 cores, 16 threads @ 3.60 GHz)',
+      gpu: 'AMD Radeon RX 7600 XT (16 GB GDDR6)',
+      ram: '32.0 GB DDR4 @ 3600 MHz',
+      storage: [
+        { size: '1 TB',    name: 'Crucial P3 Plus NVMe SSD', model: 'CT1000P3PSSD8' },
+        { size: '1.92 TB', name: 'Seagate SSD',              model: 'ZA1920CV10002' },
+        { size: '1 TB',    name: 'WD Blue HDD',              model: 'WD10EZEX' }
+      ],
+      storageTotal: '3.57 TB',
+      os: 'Windows 10 Enterprise IoT LTSC',
+      osNote: '(debloated, pure stability)'
+    },
+    {
+      id: 'mobile',
+      label: 'MOBILE_RIG',
+      kind: 'KTU CAMPUS & LABS',
+      name: 'Lenovo ThinkPad E16 Gen 3',
+      accent: 'var(--neon-pink)',
+      cpu: 'AMD Ryzen 5 230',
+      cpuNote: '(efficient multi-core architecture)',
+      ram: '32 GB RAM',
+      ramNote: '(VM headroom and multitasking)',
+      os: 'Windows 11 Pro',
+      purpose: 'KTU lecture halls, programming labs, portable diagnostics and an on-the-go terminal.'
     }
+  ],
+
+  pills: ['Ryzen 7 3700X', 'RX 7600 XT 16GB', '32GB DDR4-3600', 'Win 10 IoT LTSC', 'ThinkPad E16 (32GB)', '1.9 TDI AFN (VP37)', 'KTU Freshman'],
+
+  links: {
+    githubUser: 'RetroDriveXD',
+    github: 'https://github.com/RetroDriveXD',
+    discord: 'retro_drive',
+    steamName: 'Retro_Drive',
+    steam: 'https://steamcommunity.com/id/Retro_Drive/',
+    email: '',        // e.g. 'you@example.com'. The email card shows only when set
+    cv: '',           // e.g. 'cv.pdf'. The CV card shows only when set
+    rtosRepo: ''      // e.g. 'https://github.com/RetroDriveXD/RTOS-Linux'. The link shows only when set
+  }
+};
+
+/* Theme registry. The CSS for each theme lives in the <style> block above. */
+const THEMES = {
+  vaporwave: { label: 'Vaporwave',      meta: '#180533', swatch: ['#ff71ce', '#01cdfe'] },
+  amber:     { label: 'Amber CRT',      meta: '#120a00', swatch: ['#ffb000', '#c27c00'] },
+  phosphor:  { label: 'Green phosphor', meta: '#010a03', swatch: ['#39ff14', '#00ffa2'] },
+  ice:       { label: 'Ice',            meta: '#050b1c', swatch: ['#5ef2ff', '#8ab4ff'] }
+};
+const THEME_NAMES = Object.keys(THEMES);
+
+const fmt = n => n.toLocaleString('en-US');
+const ODO = fmt(DATA.car.odometer) + ' KM';
+const mainRig = DATA.rigs[0], mobileRig = DATA.rigs[1];
+const storageSummary = r => r.storage.map(s => `${s.size} ${s.name}`).join(' + ');
+
+const $ = id => document.getElementById(id);
+const docEl = document.documentElement;
+const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function esc(t) {
+  return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+const c = (color, text) => `<span style="color:var(--${color})">${text}</span>`;
+
+/* =========================================================
+   1. RENDER STATIC BLOCKS FROM DATA
+   ========================================================= */
+(function renderStatic() {
+  const marquee = `❖ RETRO_SYSTEMS // ${ODO} PASSAT B5 AFN // MAIN RIG: ${mainRig.cpu.replace('AMD ', '').toUpperCase()} + ${mainRig.gpu.split(' (')[0].replace('AMD Radeon ', '').toUpperCase()} // ${mobileRig.name.toUpperCase()} // KTU FRESHMAN ❖`;
+  $('marquee-a').textContent = marquee;
+  $('marquee-b').textContent = marquee;
+
+  $('bind-benchmark').textContent = `${DATA.car.short.replace('AFN', '(AFN)')} — ${ODO} on the odometer`;
+  $('bind-intro').textContent = `I thrive where physical iron meets low-level compute. Whether it's compiling Debian live spins via Cubic, running unbloated Enterprise IoT LTSC for sustained low-latency workloads, or dailying a ${ODO.toLowerCase()} mechanical turbo-diesel, stock settings are just suggestions.`;
+  $('pills').innerHTML = DATA.pills.map(p => `<span class="pill">${esc(p)}</span>`).join('');
+
+  $('bind-odo').textContent = ODO;
+  $('bind-car-title').textContent = `${DATA.car.short} — ${Math.round(DATA.car.odometer / 1000)}k km`;
+  $('bind-car-badge').textContent = `${ODO} SURVIVOR`;
+
+  const rows = r => {
+    const out = [];
+    out.push(['PROCESSOR', r.cpu, r.cpuNote]);
+    if (r.gpu) out.push(['GRAPHICS', r.gpu]);
+    out.push(['MEMORY', r.ram, r.ramNote]);
+    if (r.storage) out.push(['STORAGE', null, `${r.storageTotal} array (${storageSummary(r)})`]);
+    out.push(['OS PLATFORM', r.os, r.osNote]);
+    if (r.purpose) out.push(['PURPOSE', null, r.purpose]);
+    return out;
+  };
+  $('rigs').innerHTML = DATA.rigs.map(r => {
+    const title = r.id === 'main'
+      ? `// ${r.label}: "${esc(DATA.host.toUpperCase())}" (${r.board}) [${r.kind}]`
+      : `// ${r.label}: ${esc(r.name.toUpperCase())} [${r.kind}]`;
+    const body = rows(r).map(([k, v, n]) =>
+      `<div><span class="key">${k} :</span> ${v ? `<span class="val">${esc(v)}</span>` : ''}${n ? ' ' + esc(n) : ''}</div>`
+    ).join('');
+    return `<div class="hud-box" style="border-left-color:${r.accent}">
+      <div class="hud-title">${title}</div>${body}</div>`;
+  }).join('');
+
+  const L = DATA.links;
+  $('github-handle').textContent = '@' + L.githubUser;
+  $('card-github').href = L.github;
+  $('footer-gh').href = L.github;
+  $('footer-gh').textContent = 'GITHUB: ' + L.githubUser.toUpperCase();
+  $('discord-handle').textContent = L.discord;
+  $('steam-handle').textContent = L.steamName;
+  $('card-steam').href = L.steam;
+
+  if (L.email) {
+    $('card-email').href = 'mailto:' + L.email;
+    $('email-handle').textContent = L.email;
+    $('card-email').hidden = false;
+  }
+  if (L.cv) {
+    $('card-cv').href = L.cv;
+    $('card-cv').hidden = false;
+  }
+  document.querySelectorAll('[data-link]').forEach(el => {
+    const url = L[el.dataset.link];
+    if (url) { el.querySelector('a').href = url; el.hidden = false; }
+  });
+
+  const d = new Date(document.lastModified);
+  if (!isNaN(d)) $('updated').textContent = ' // UPDATED ' + d.toISOString().slice(0, 10);
+
+  $('term-prompt').textContent = `${DATA.handle}@${DATA.host}:~$`;
+})();
+
+/* =========================================================
+   2. THEME SWITCHER
+   State lives in the URL (?theme=amber) so links are shareable.
+   No localStorage, so it also works in sandboxed previews.
+   ========================================================= */
+let currentTheme = THEMES[docEl.getAttribute('data-theme')] ? docEl.getAttribute('data-theme') : 'vaporwave';
+
+function setTheme(name, { flash = true } = {}) {
+  if (!Object.hasOwn(THEMES, name)) return false;
+  currentTheme = name;
+  docEl.setAttribute('data-theme', name);
+  $('meta-theme').setAttribute('content', THEMES[name].meta);
+  document.querySelectorAll('.swatch').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.theme === name)));
+
+  try {
+    const u = new URL(location.href);
+    if (name === 'vaporwave') u.searchParams.delete('theme'); else u.searchParams.set('theme', name);
+    history.replaceState(null, '', u);
+  } catch (e) { /* e.g. sandboxed or file:// context */ }
+
+  if (flash && !prefersReducedMotion()) {
+    const f = $('flash');
+    f.classList.remove('on');
+    void f.offsetWidth;
+    f.classList.add('on');
+  }
+  return true;
+}
+
+(function buildSwatches() {
+  const wrap = $('swatches');
+  THEME_NAMES.forEach(name => {
+    const t = THEMES[name];
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'swatch';
+    b.dataset.theme = name;
+    b.title = t.label;
+    b.setAttribute('aria-label', `${t.label} theme`);
+    b.setAttribute('aria-pressed', String(name === currentTheme));
+    b.style.background = `linear-gradient(135deg, ${t.swatch[0]} 50%, ${t.swatch[1]} 50%)`;
+    b.addEventListener('click', () => setTheme(name));
+    wrap.appendChild(b);
+  });
+  $('meta-theme').setAttribute('content', THEMES[currentTheme].meta);
+})();
+
+/* =========================================================
+   3. AUDIO PLAYER (hides itself if bgm.mp3 is missing)
+   ========================================================= */
+const audio = $('bgm');
+const audioBtn = $('audio-toggle');
+audio.src = 'bgm.mp3';
+audio.volume = 0.35;
+
+function hideAudio() { audioBtn.hidden = true; }
+audio.addEventListener('error', hideAudio);
+
+function toggleAudio() {
+  if (audio.paused) {
+    audio.play().then(() => {
+      $('audio-icon').textContent = '❚❚';
+      $('audio-status').textContent = 'BGM [PLAYING 35%]';
+      $('audio-status').style.color = 'var(--neon-pink)';
+      audioBtn.setAttribute('aria-pressed', 'true');
+    }).catch(hideAudio);
+  } else {
+    audio.pause();
+    $('audio-icon').textContent = '▶';
+    $('audio-status').textContent = 'BGM [PAUSED]';
+    $('audio-status').style.color = 'var(--vapor-mint)';
+    audioBtn.setAttribute('aria-pressed', 'false');
+  }
+}
+audioBtn.addEventListener('click', toggleAudio);
+
+/* =========================================================
+   4. IDLE TELEMETRY (computed from timestamps, no drift)
+   ========================================================= */
+const startTime = Date.now();
+const idleSeconds = () => Math.floor((Date.now() - startTime) / 1000);
+const crankCount = () => Math.floor(idleSeconds() * DATA.car.idleRpm / 60);
+
+function updateTelemetry() {
+  const s = idleSeconds();
+  const h = String(Math.floor(s / 3600)).padStart(2, '0');
+  const m = String(Math.floor((s % 3600) / 60)).padStart(2, '0');
+  const sec = String(s % 60).padStart(2, '0');
+  $('idle-counter').textContent = `${h}:${m}:${sec}`;
+  $('crank-counter').textContent = fmt(crankCount());
+}
+updateTelemetry();
+setInterval(updateTelemetry, 1000);
+
+/* =========================================================
+   5. DISCORD COPY
+   ========================================================= */
+$('card-discord').addEventListener('click', async () => {
+  const tag = $('discord-status-tag');
+  const orig = '[CLICK TO COPY]';
+  let ok = false;
+  try {
+    await navigator.clipboard.writeText(DATA.links.discord);
+    ok = true;
+  } catch (e) { /* clipboard unavailable (e.g. insecure context) */ }
+  tag.textContent = ok ? '[COPIED!]' : '[COPY FAILED]';
+  tag.style.color = ok ? 'var(--neon-pink)' : 'var(--vapor-yellow)';
+  setTimeout(() => { tag.textContent = orig; tag.style.color = 'var(--vapor-mint)'; }, 2000);
+});
+
+/* =========================================================
+   6. BOOT INTRO
+   Plays once per tab (flag kept in window.name). Skippable with
+   any key, a click/tap, or the SKIP button. Disabled for
+   prefers-reduced-motion. Use ?boot=0 to disable, or the
+   `boot` terminal command to replay.
+   ========================================================= */
+let bootRunning = false;
+
+async function runBoot() {
+  if (bootRunning) return;
+  bootRunning = true;
+
+  const el = $('boot'), log = $('boot-log'), skipBtn = $('boot-skip');
+  let skipped = false;
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  const onSkip = () => { skipped = true; };
+
+  docEl.classList.add('booting');
+  el.classList.remove('fade');
+  log.innerHTML = '';
+  el.addEventListener('click', onSkip);
+  el.addEventListener('touchstart', onSkip, { passive: true });
+  document.addEventListener('keydown', onSkip);
+  skipBtn.focus({ preventScroll: true });
+
+  const put = async (html, ms = 120) => {
+    if (skipped) return;
+    log.insertAdjacentHTML('beforeend', html + '\n');
+    await sleep(ms);
+  };
+  const OK = '  ' + c('vapor-mint', '[ OK ]');
+  const now = new Date();
+
+  await put(c('neon-pink', `RETRO-BIOS v1.9  (C) 1998-${now.getFullYear()} Retro Systems Inc.`), 160);
+  await put(`BIOS date ${now.toISOString().slice(0, 10)}   build: 1.9-TDI`, 100);
+  await put('', 60);
+  await put(`CPU    : ${esc(mainRig.cpu)} @ 3.60 GHz`, 120);
+
+  if (!skipped) {
+    log.insertAdjacentHTML('beforeend', 'Memory : <span id="boot-mem">0</span> MB');
+    const total = Math.round(parseFloat(mainRig.ram) * 1024);
+    const steps = 14;
+    for (let i = 1; i <= steps && !skipped; i++) {
+      $('boot-mem').textContent = Math.round(total * i / steps);
+      await sleep(45);
+    }
+    if (!skipped) $('boot-mem').textContent = total;
+    log.insertAdjacentHTML('beforeend', OK + '\n');
   }
 
-  /* =========================================================
-     2. PASSAT AFN IDLING & CRANK REVOLUTION TICKER
-     ========================================================= */
-  let idleSecs = 0;
-  let crankCount = 0;
-
-  function updateTelemetry() {
-    idleSecs++;
-    const h = String(Math.floor(idleSecs / 3600)).padStart(2, '0');
-    const m = String(Math.floor((idleSecs % 3600) / 60)).padStart(2, '0');
-    const s = String(idleSecs % 60).padStart(2, '0');
-    document.getElementById('idle-counter').innerText = `${h}:${m}:${s}`;
-
-    // ~903 RPM idle speed = 15.05 revs per second
-    crankCount += 15;
-    document.getElementById('crank-counter').innerText = crankCount.toLocaleString();
+  await put(`GPU    : ${esc(mainRig.gpu)}` + OK, 120);
+  await put('', 40);
+  await put('Detecting storage...', 140);
+  for (const s of mainRig.storage) {
+    await put(`  ${esc(s.size.padEnd(7))} ${esc(s.name)}` + OK, 90);
   }
-  setInterval(updateTelemetry, 1000);
+  await put('', 40);
+  await put(`Odometer check : ${ODO}` + OK, 140);
+  await put(`Palette        : ${esc(THEMES[currentTheme].label)}` + OK, 140);
+  await put('', 60);
 
-  /* =========================================================
-     3. 1-CLICK DISCORD TAG CLIPBOARD COPIER
-     ========================================================= */
-  function copyDiscord(tag) {
-    navigator.clipboard.writeText(tag).then(() => {
-      const tagLabel = document.getElementById('discord-status-tag');
-      const origText = tagLabel.innerText;
-      tagLabel.innerText = '[COPIED!]';
-      tagLabel.style.color = 'var(--neon-pink)';
-      setTimeout(() => {
-        tagLabel.innerText = origText;
-        tagLabel.style.color = 'var(--vapor-mint)';
-      }, 2000);
-    });
+  if (!skipped) {
+    log.insertAdjacentHTML('beforeend', 'Loading RTOS-Linux <span id="boot-bar"></span>');
+    const n = 20;
+    for (let i = 0; i <= n && !skipped; i++) {
+      $('boot-bar').textContent = `[${'#'.repeat(i)}${'.'.repeat(n - i)}] ${Math.round(i * 100 / n)}%`;
+      await sleep(55);
+    }
+    log.insertAdjacentHTML('beforeend', '\n');
   }
 
-  /* =========================================================
-     4. INTERACTIVE RETRO TERMINAL (History + Tab Complete)
-     ========================================================= */
-  const termOut = document.getElementById('term-out');
-  const termIn = document.getElementById('term-in');
+  await put(c('vapor-yellow', `Welcome, ${esc(DATA.handle)}.`), 450);
 
-  const cmdHistory = [];
-  let historyIdx = -1;
+  // Tear down
+  el.removeEventListener('click', onSkip);
+  el.removeEventListener('touchstart', onSkip);
+  document.removeEventListener('keydown', onSkip);
+  el.classList.add('fade');
+  await sleep(skipped ? 120 : 400);
+  docEl.classList.remove('booting');
+  el.classList.remove('fade');
+  log.innerHTML = '';
+  try { window.name = 'retro-booted'; } catch (e) {}
+  window.scrollTo(0, 0);
+  bootRunning = false;
+}
 
-  const commandList = {
-    help: () => `Available commands:
-  <span style="color:var(--neon-cyan)">neofetch</span>        - Hardware specs, OS stack & AFN benchmark
-  <span style="color:var(--neon-cyan)">specs</span>           - Detailed specs for Main Rig "Epstein" & ThinkPad
-  <span style="color:var(--neon-cyan)">socials</span>         - List comms uplinks & contact channels
-  <span style="color:var(--neon-cyan)">repos</span>           - Fetch live repos from GitHub (RetroDriveXD)
-  <span style="color:var(--neon-cyan)">idling</span>          - Inspect continuous engine crank count
-  <span style="color:var(--neon-cyan)">ls</span>              - List directory files
-  <span style="color:var(--neon-cyan)">cat amnesia.txt</span> - Status of the 2 abandoned HPL2 custom stories
-  <span style="color:var(--neon-cyan)">cat mcreator.txt</span>- Notes on the 3 MCreator mods
-  <span style="color:var(--neon-cyan)">uptime</span>          - System & diesel bench uptime
-  <span style="color:var(--neon-cyan)">whoami</span>          - Display active user session
-  <span style="color:var(--neon-cyan)">uname</span>           - Kernel and architecture release
-  <span style="color:var(--neon-cyan)">music</span>           - Toggle background audio player
-  <span style="color:var(--neon-cyan)">clear</span>           - Clear terminal buffer`,
+/* =========================================================
+   7. TERMINAL
+   ========================================================= */
+const termOut = $('term-out');
+const termIn = $('term-in');
+const promptText = `${DATA.handle}@${DATA.host}:~$`;
+const cmdHistory = [];
+let historyIdx = -1;
 
-    neofetch: () => `
-<span style="color:var(--neon-pink)">  ___ _____ _   _</span>   <span style="color:var(--neon-cyan)">retro@epstein</span>
-<span style="color:var(--neon-pink)"> / _ \\_   _| | | |</span>  -----------------
-<span style="color:var(--neon-pink)">|  _  || | | |_| |</span>  <span style="color:var(--vapor-yellow)">Host:</span> Epstein (MS-7C95 Motherboard)
-<span style="color:var(--neon-pink)">|_| |_||_|  \\___/</span>   <span style="color:var(--vapor-yellow)">CPU:</span> AMD Ryzen 7 3700X (8C/16T @ 3.60GHz)
-                    <span style="color:var(--vapor-yellow)">GPU:</span> AMD Radeon RX 7600 XT (16 GB GDDR6)
-                    <span style="color:var(--vapor-yellow)">RAM:</span> 32.0 GB DDR4-3600 MHz
-                    <span style="color:var(--vapor-yellow)">Disk:</span> 3.57 TB (Crucial NVMe + Seagate SSD + WD Blue)
-                    <span style="color:var(--vapor-yellow)">Main OS:</span> Windows 10 Enterprise IoT LTSC
-                    <span style="color:var(--vapor-yellow)">Mobile:</span> ThinkPad E16 Gen 3 (Ryzen 5 230 / 32GB)
-                    <span style="color:var(--vapor-yellow)">Vehicle:</span> Passat B5 1.9 TDI AFN (529k km)`,
+const HELP = [
+  ['neofetch', 'Hardware specs, OS stack & AFN benchmark'],
+  ['specs', 'Detailed specs for both rigs'],
+  ['theme [name]', 'List or switch palettes (try: theme amber)'],
+  ['boot', 'Replay the boot sequence'],
+  ['projects', 'What I am building (and what I abandoned)'],
+  ['contact', 'How to reach me'],
+  ['socials', 'List comms uplinks'],
+  ['repos', 'Fetch live repos from GitHub'],
+  ['idling', 'Inspect continuous engine crank count'],
+  ['ls', 'List directory files'],
+  ['cat amnesia.txt', 'Status of the abandoned HPL2 stories'],
+  ['cat mcreator.txt', 'Notes on the MCreator mods'],
+  ['cat passat.txt', 'Passat AFN fact sheet'],
+  ['uptime', 'System & diesel bench uptime'],
+  ['whoami', 'Display active user session'],
+  ['uname', 'Kernel and architecture release'],
+  ['date', 'Current date and time'],
+  ['music', 'Toggle background audio'],
+  ['clear', 'Clear terminal buffer']
+];
 
-    specs: () => `[HARDWARE FLEET SPECIFICATION]
+function link(url, label) {
+  const safe = /^https?:\/\//i.test(url) ? url : '#';
+  return `<a href="${esc(safe)}" target="_blank" rel="noopener noreferrer" style="color:var(--neon-cyan);">${esc(label || url)}</a>`;
+}
+
+function themeList() {
+  return '[THEMES]\n' + THEME_NAMES.map(n =>
+    `${n === currentTheme ? c('vapor-mint', '*') : ' '} ${c('neon-cyan', esc(n.padEnd(10)))} ${esc(THEMES[n].label)}`
+  ).join('\n') + `\nUsage: ${c('vapor-mint', 'theme &lt;name&gt;')} or ${c('vapor-mint', 'theme next')}`;
+}
+
+const commands = {
+  help: () => 'Available commands:\n' + HELP.map(([k, d]) => `  ${c('neon-cyan', esc(k).padEnd(17))} - ${esc(d)}`).join('\n'),
+
+  neofetch: () => {
+    const f = (k, v) => `${c('vapor-yellow', k + ':')} ${esc(v)}`;
+    const logo = ['  ___ _____ _   _', ' / _ \\_   _| | | |', '|  _  || | | |_| |', '|_| |_||_|  \\___/'];
+    const info = [
+      c('neon-cyan', `${esc(DATA.handle)}@${esc(DATA.host)}`),
+      '-----------------',
+      f('Host', `${DATA.host} (${mainRig.board} Motherboard)`),
+      f('CPU', `${mainRig.cpu} (8C/16T @ 3.60GHz)`),
+      f('GPU', mainRig.gpu),
+      f('RAM', mainRig.ram.replace(' @ ', '-')),
+      f('Disk', `${mainRig.storageTotal} (${mainRig.storage.map(s => s.name.replace(/ (SSD|HDD|NVMe SSD)$/, '')).join(' + ')})`),
+      f('Main OS', mainRig.os),
+      f('Mobile', `${mobileRig.name} (${mobileRig.cpu} / ${mobileRig.ram.replace(' RAM', '')})`),
+      f('Theme', THEMES[currentTheme].label),
+      f('Vehicle', `${DATA.car.short} (${Math.round(DATA.car.odometer / 1000)}k km)`)
+    ];
+    return '\n' + info.map((line, i) => c('neon-pink', (logo[i] || '').padEnd(20)) + line).join('\n');
+  },
+
+  specs: () => `[HARDWARE FLEET SPECIFICATION]
 --------------------------------------------------
-1. MAIN DESKTOP RIG ("Epstein" // MS-7C95):
-   • CPU:      AMD Ryzen 7 3700X 8-Core (16 Threads) @ 3.60 GHz
-   • GPU:      AMD Radeon RX 7600 XT (16 GB GDDR6)
-   • RAM:      32.0 GB DDR4 @ 3600 MHz
-   • Storage:  3.57 TB Total Hybrid Setup
-               - 1TB Crucial P3 Plus NVMe SSD (CT1000P3PSSD8)
-               - 1.92TB Seagate IronWolf/BarraCuda SSD (ZA1920CV10002)
-               - 1TB Western Digital Blue HDD (WD10EZEX)
-   • OS:       Windows 10 Enterprise IoT LTSC
+1. MAIN DESKTOP RIG ("${esc(DATA.host)}" // ${mainRig.board}):
+   • CPU:      ${esc(mainRig.cpu)} ${esc(mainRig.cpuNote)}
+   • GPU:      ${esc(mainRig.gpu)}
+   • RAM:      ${esc(mainRig.ram)}
+   • Storage:  ${mainRig.storageTotal} total
+${mainRig.storage.map(s => `               - ${esc(s.size)} ${esc(s.name)} (${esc(s.model)})`).join('\n')}
+   • OS:       ${esc(mainRig.os)}
 
 2. MOBILE LAB (CAMPUS DAILY):
-   • Model:    Lenovo ThinkPad E16 Gen 3
-   • CPU:      AMD Ryzen 5 230
-   • RAM:      32.0 GB High-Density Memory
-   • OS:       Windows 11 Pro
+   • Model:    ${esc(mobileRig.name)}
+   • CPU:      ${esc(mobileRig.cpu)}
+   • RAM:      ${esc(mobileRig.ram)}
+   • OS:       ${esc(mobileRig.os)}
 
 3. DIESEL TEST BENCH:
-   • Vehicle:  VW Passat B5 Sedan 1.9 TDI (AFN 81kW)
-   • Odometer: 529,000 KM (Indestructible VP37 pump)`,
+   • Vehicle:  ${esc(DATA.car.name)} ${DATA.car.power}
+   • Odometer: ${ODO} (${DATA.car.pump} pump)`,
 
-    socials: () => `[NETWORK UPLINKS]
-• GitHub:  https://github.com/RetroDriveXD
-• Discord: retrodrivexd (Tap card on page to copy)
-• Steam:   https://steamcommunity.com`,
+  theme: () => themeList(),
 
-    ls: () => `<span style="color:var(--vapor-mint)">amnesia.txt   mcreator.txt   passat_b5.nfo   debian_sid_cubic.iso</span>`,
+  boot: async () => {
+    if (prefersReducedMotion()) return 'Boot sequence is disabled because your system prefers reduced motion.';
+    await runBoot();
+    return 'Boot sequence complete.';
+  },
 
-    uptime: () => `Passat AFN engine: 529,000 KM | Active session idle: ${idleSecs}s | Load average: 0.12, 0.08, 0.02`,
+  projects: () => `[PROJECTS]
+• RTOS-Linux     - Debian Sid + Cubic distro with a Win98-style shell ${c('vapor-mint', '[hobby ISO]')}
+• KTU track      - C# and discrete math, year 1 ${c('vapor-mint', '[active]')}
+• Amnesia        - 2 HPL2 custom stories ${c('vapor-yellow', '[abandoned]')}
+• MCreator mods  - 3 mods, 1 survived ${c('vapor-yellow', '[archived]')}
+• Golf restomod  - 1.9 TDI platform plans ${c('neon-pink', '[vision]')}`,
 
-    whoami: () => `retro (uid=1000 gid=1000 groups=1000(retro),27(sudo),100(users))`,
+  contact: () => {
+    const L = DATA.links;
+    return `[CONTACT]\n• GitHub:  ${link(L.github)}\n• Discord: ${esc(L.discord)} (tap the card on the page to copy)\n• Steam:   ${link(L.steam)}` +
+      (L.email ? `\n• Email:   ${esc(L.email)}` : '');
+  },
 
-    uname: () => `Linux epstein 6.12.0-sid-amd64 #1 SMP PREEMPT_DYNAMIC Debian x86_64 GNU/Linux`,
+  socials: () => commands.contact(),
 
-    sudo: () => `<span style="color:var(--neon-pink)">[SECURITY ACCESS DENIED]</span> Key transponder verified, but user is not in the sudoers file. Immobilizer engaged.`,
+  ls: () => c('vapor-mint', 'amnesia.txt   mcreator.txt   passat.txt   debian_sid_cubic.iso'),
 
-    idling: () => `Continuous AFN idle: ${idleSecs}s | Calculated crank cycles: ${crankCount.toLocaleString()} revs @ ~903 RPM.`,
+  uptime: () => `Passat AFN engine: ${ODO} | Active session idle: ${idleSeconds()}s | Load average: 0.12, 0.08, 0.02`,
 
-    music: () => {
-      toggleAudio();
-      return `Toggled audio player.`;
-    },
+  whoami: () => `${esc(DATA.handle)} (uid=1000 gid=1000 groups=1000(${esc(DATA.handle)}),27(sudo),100(users))`,
 
-    'cat amnesia.txt': () => `[AMNESIA: THE DARK DESCENT - CUSTOM STORIES]
+  uname: () => 'Linux ' + esc(DATA.host) + ' 6.12.0-sid-amd64 #1 SMP PREEMPT_DYNAMIC Debian x86_64 GNU/Linux',
+
+  date: () => esc(new Date().toString()),
+
+  idling: () => `Continuous AFN idle: ${idleSeconds()}s | Calculated crank cycles: ${fmt(crankCount())} revs @ ~${DATA.car.idleRpm} RPM.`,
+
+  music: () => { toggleAudio(); return 'Toggled audio player.'; },
+
+  exit: () => 'logout: there is no escape from the vaporwave.',
+
+  'cat amnesia.txt': () => `[AMNESIA: THE DARK DESCENT - CUSTOM STORIES]
 - Story 1: Custom scripted sanity drops & map geometry complete.
 - Story 2: Dungeon fortress layout complete.
 - Abandoned status: AngelScript level-change timers broke and were frozen.`,
 
-    'cat mcreator.txt': () => `[MCREATOR MOD EXPERIMENTS]
+  'cat mcreator.txt': () => `[MCREATOR MOD EXPERIMENTS]
 - Mod 1 (Diesel Tech): Surviving project workspace with machinery & custom fuel items intact.
 - Mods 2 & 3: Experimental biomes and combat tweaks lost in drive reformat.`,
 
-    repos: async () => {
-      try {
-        const res = await fetch('https://api.github.com/users/RetroDriveXD/repos?sort=updated&per_page=6');
-        if (!res.ok) throw new Error();
-        const data = await res.json();
-        if (!data.length) return 'No public repositories found.';
-        let text = '<span style="color:var(--neon-pink)">Public Repositories for RetroDriveXD:</span>\n';
-        data.forEach(r => {
-          text += `• <a href="${r.html_url}" target="_blank" style="color:var(--neon-cyan);">${r.name}</a> - ${r.description || 'No description'} (${r.stargazers_count}★)\n`;
-        });
-        return text;
-      } catch (e) {
-        return `[GITHUB OFFLINE / RATE-LIMITED]
-• <a href="https://github.com/RetroDriveXD" target="_blank" style="color:var(--neon-pink);">RetroDriveXD/debian-sid-cubic</a> - Custom Debian Sid live spin
-• <a href="https://github.com/RetroDriveXD" target="_blank" style="color:var(--neon-pink);">RetroDriveXD/afn-telemetry</a> - 1.9 TDI diagnostics log`;
-      }
-    },
+  'cat passat.txt': () => `[${esc(DATA.car.name)}]
+- Engine:   1.9 TDI AFN, ${DATA.car.power}
+- Pump:     ${DATA.car.pump} rotary distributor (purely mechanical)
+- Odometer: ${ODO}
+- Idle:     ~${DATA.car.idleRpm} RPM
+- Status:   still running. Immobilizer engaged.`,
 
-    clear: () => {
-      termOut.innerHTML = '';
-      return '';
+  repos: async () => {
+    const L = DATA.links;
+    try {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 6000);
+      const res = await fetch(`https://api.github.com/users/${encodeURIComponent(L.githubUser)}/repos?sort=updated&per_page=6`, { signal: ctrl.signal });
+      clearTimeout(timer);
+      if (!res.ok) throw new Error('bad status');
+      const data = await res.json();
+      if (!Array.isArray(data) || !data.length) return 'No public repositories found.';
+      return c('neon-pink', `Public repositories for ${esc(L.githubUser)}:`) + '\n' +
+        data.map(r => `• ${link(r.html_url, r.name)} - ${esc(r.description || 'No description')} (${Number(r.stargazers_count) || 0}★)`).join('\n');
+    } catch (e) {
+      return `[GITHUB OFFLINE / RATE-LIMITED]\nCould not load the repo list right now. Browse it directly: ${link(L.github)}`;
     }
-  };
+  },
 
-  function scrollToBottom() {
-    termOut.scrollTop = termOut.scrollHeight;
-  }
+  clear: () => { termOut.innerHTML = ''; return ''; }
+};
 
-  async function runCommand(cmd) {
-    const clean = cmd.trim();
-    if (!clean) return;
+function print(html, color) {
+  const div = document.createElement('div');
+  if (color) div.style.color = color;
+  div.innerHTML = html;
+  termOut.appendChild(div);
+}
 
-    if (cmdHistory[cmdHistory.length - 1] !== clean) {
-      cmdHistory.push(clean);
-    }
-    historyIdx = cmdHistory.length;
+async function runCommand(raw) {
+  const clean = raw.trim();
+  if (!clean) return;
 
-    const row = document.createElement('div');
-    row.innerHTML = `<span style="color:var(--neon-cyan)">retro@epstein:~$</span> <span>${escapeHtml(clean)}</span>`;
-    termOut.appendChild(row);
+  if (cmdHistory[cmdHistory.length - 1] !== clean) cmdHistory.push(clean);
+  historyIdx = cmdHistory.length;
 
-    const lookup = clean.toLowerCase();
+  print(`${c('neon-cyan', esc(promptText))} ${esc(clean)}`);
 
-    if (lookup.startsWith('sudo ')) {
-      const out = document.createElement('div');
-      out.innerHTML = commandList.sudo();
-      termOut.appendChild(out);
-    } else if (commandList[lookup]) {
-      const res = await commandList[lookup]();
-      if (res) {
-        const out = document.createElement('div');
-        out.innerHTML = res;
-        termOut.appendChild(out);
-      }
+  const lookup = clean.toLowerCase().replace(/\s+/g, ' ');
+  const themeArg = lookup.match(/^theme (\S+)$/);
+
+  if (themeArg) {
+    let name = themeArg[1];
+    if (name === 'next') name = THEME_NAMES[(THEME_NAMES.indexOf(currentTheme) + 1) % THEME_NAMES.length];
+    if (setTheme(name)) {
+      print(`Palette switched to ${c('vapor-mint', esc(THEMES[name].label))}.`);
     } else {
-      const err = document.createElement('div');
-      err.style.color = 'var(--vapor-yellow)';
-      err.innerText = `sh: command not found: ${clean}. Type 'help' or press Tab for options.`;
-      termOut.appendChild(err);
+      print(`theme: unknown palette '${esc(themeArg[1])}'.\n` + themeList(), 'var(--vapor-yellow)');
     }
-
-    scrollToBottom();
+  } else if (Object.hasOwn(commands, lookup)) {
+    const res = await commands[lookup]();
+    if (res) print(res);
+  } else if (/^sudo(\s|$)/.test(lookup)) {
+    print(c('neon-pink', '[SECURITY ACCESS DENIED]') + ' Key transponder verified, but user is not in the sudoers file. Immobilizer engaged.');
+  } else if (/^rm(\s|$)/.test(lookup)) {
+    print('rm: operation refused. This is a Passat, not a throwaway VM.');
+  } else if (/^echo(\s|$)/.test(lookup)) {
+    print(esc(clean.slice(4).trim()));
+  } else if (/^cat\s/.test(lookup)) {
+    print(`cat: ${esc(clean.slice(3).trim())}: No such file or directory`, 'var(--vapor-yellow)');
+  } else {
+    print(`sh: command not found: ${esc(clean)}. Type 'help' or press Tab for options.`, 'var(--vapor-yellow)');
   }
 
-  function escapeHtml(text) {
-    return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  }
+  termOut.scrollTop = termOut.scrollHeight;
+}
 
-  termIn.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      const val = termIn.value;
-      termIn.value = '';
-      runCommand(val);
-      return;
-    }
-
-    if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      if (cmdHistory.length > 0 && historyIdx > 0) {
-        historyIdx--;
-        termIn.value = cmdHistory[historyIdx];
-      }
-      return;
-    }
-
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      if (historyIdx < cmdHistory.length - 1) {
-        historyIdx++;
-        termIn.value = cmdHistory[historyIdx];
-      } else {
-        historyIdx = cmdHistory.length;
-        termIn.value = '';
-      }
-      return;
-    }
-
-    if (e.key === 'Tab') {
-      e.preventDefault();
-      const current = termIn.value.trim().toLowerCase();
-      if (!current) return;
-
-      const keys = Object.keys(commandList);
-      const matches = keys.filter(k => k.startsWith(current));
-
-      if (matches.length === 1) {
-        termIn.value = matches[0];
-      } else if (matches.length > 1) {
-        const hintRow = document.createElement('div');
-        hintRow.style.color = 'var(--neon-cyan)';
-        hintRow.innerText = matches.join('   ');
-        termOut.appendChild(hintRow);
-        scrollToBottom();
-      }
-    }
+(function buildChips() {
+  const chipWrap = $('chips');
+  ['neofetch', 'specs', 'theme next', 'boot', 'projects', 'contact', 'repos', 'idling', 'cat passat.txt', 'help', 'clear'].forEach(cmd => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'chip-btn';
+    b.textContent = cmd;
+    b.addEventListener('click', () => runCommand(cmd));
+    chipWrap.appendChild(b);
   });
+})();
+
+print('RetroOS Shell (IoT LTSC / ThinkPad / AFN Station)\nType ' + c('vapor-mint', 'help') + ' to list commands, or tap the quick-run buttons above.');
+
+$('term-box').addEventListener('click', e => {
+  if (!window.getSelection().toString() && e.target.tagName !== 'A') termIn.focus();
+});
+
+const completions = () => [...Object.keys(commands), ...THEME_NAMES.map(n => 'theme ' + n), 'theme next'];
+
+termIn.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    const val = termIn.value;
+    termIn.value = '';
+    runCommand(val);
+    return;
+  }
+  if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    if (cmdHistory.length > 0 && historyIdx > 0) { historyIdx--; termIn.value = cmdHistory[historyIdx]; }
+    return;
+  }
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    if (historyIdx < cmdHistory.length - 1) { historyIdx++; termIn.value = cmdHistory[historyIdx]; }
+    else { historyIdx = cmdHistory.length; termIn.value = ''; }
+    return;
+  }
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    const current = termIn.value.trim().toLowerCase();
+    if (!current) return;
+    const matches = completions().filter(k => k.startsWith(current));
+    if (matches.length === 1) {
+      termIn.value = matches[0];
+    } else if (matches.length > 1) {
+      print(esc(matches.join('   ')), 'var(--neon-cyan)');
+      termOut.scrollTop = termOut.scrollHeight;
+    }
+  }
+});
+
+/* =========================================================
+   8. START
+   ========================================================= */
+if (docEl.classList.contains('booting')) runBoot();
 </script>
 
 </body>
